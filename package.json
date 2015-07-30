@@ -1,0 +1,25 @@
+{
+  "name": "cordova-fabric-plugin",
+  "version": "0.6.0",
+  "description": "Cordova Fabric.io Plugin",
+  "cordova": {
+    "id": "cordova-fabric-plugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarriaroman/FabricPlugin"
+  },
+  "keywords": [
+    "cordova",
+    "device",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Roman A. Sarria",
+  "license": "MIT"
+}
