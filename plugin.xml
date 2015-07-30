@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin id="com.sarriaroman.fabric" version="0.1.0" xmlns="http://www.phonegap.com/ns/plugins/1.0">
+
+    <name>Fabric</name>
+    <description>Cordova Fabric Plugin for iOS and Android</description>
+    <license>MIT</license>
+    <keywords>cordova,fabric,craslytics,answers,events,ios,android</keywords>
+
+    <js-module name="FabricPlugin" src="www/FabricPlugin.js">
+        <clobbers target="window.fabric.core"/>
+    </js-module>
+
+    <js-module name="FabricAnswersPlugin" src="www/FabricPlugin.Answers.js">
+        <clobbers target="window.fabric.Answers"/>
+    </js-module>
+
+    <js-module name="FabricCrashlyticsPlugin" src="www/FabricPlugin.Crashlytics.js">
+        <clobbers target="window.fabric.Crashlytics"/>
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="FabricPlugin">
+                <param name="android-package" value="com.sarriaroman.fabric.FabricPlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/FabricPlugin.java" target-dir="src/com/sarriaroman/fabric"/>
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="FabricPlugin">
+                <param name="ios-package" value="FabricPlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/ios/FabricPlugin.m"/>
+    </platform>
+
+</plugin>
