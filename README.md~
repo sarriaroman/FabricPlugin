@@ -137,7 +137,7 @@ Send a (non fatal) crash to the backand of CrashLytics.
 - Javascript code moved to ES6  
 - Separated in modules  
 - Full support for both OSs with same API  
-- Support for Non Fatal Crashes.
+- Support for Non Fatal Crashes in Android.
 
 ## ToDo  
 

@@ -147,5 +147,4 @@ Send a (non fatal) crash to the backand of CrashLytics.
 ## AUTHORS
 
 - Román A. Sarria  
-- Damian Small
 - Based on Crashlytics plugin: https://github.com/francescobitmunks/cordova-plugin-crashlytics
