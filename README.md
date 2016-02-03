@@ -129,11 +129,15 @@ Add log for the crash.
 #### sendCrash() - iOS, Android
 Send a (fatal) crash to the backand of CrashLytics.
 
+#### sendNonFatalCrash() - Android
+Send a (non fatal) crash to the backand of CrashLytics.
+
 ## Changes
 
 - Javascript code moved to ES6  
 - Separated in modules  
 - Full support for both OSs with same API  
+- Support for Non Fatal Crashes in Android.
 
 ## ToDo  
 

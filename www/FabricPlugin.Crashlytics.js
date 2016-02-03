@@ -24,6 +24,11 @@ var FabricCrashlytics = (function () {
             window.fabric.core.execPlugin('sendCrash');
         }
     }, {
+        key: 'sendNonFatalCrash',
+        value: function sendNonFatalCrash() {
+            window.fabric.core.execPlugin('sendNonFatalCrash');
+        }
+    }, {
         key: 'setUserIdentifier',
         value: function setUserIdentifier(userIdentifier) {
             var defaults = {
