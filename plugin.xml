@@ -7,6 +7,12 @@
     <license>MIT</license>
     <keywords>cordova,fabric,craslytics,answers,events,ios,android</keywords>
 
+    <preference name="CRASHLYTICS_API_KEY" />
+    <preference name="CRASHLYTICS_API_SECRET" />
+
+    <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+    <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
+
     <js-module name="FabricPlugin" src="www/FabricPlugin.js">
         <clobbers target="window.fabric.core"/>
     </js-module>
