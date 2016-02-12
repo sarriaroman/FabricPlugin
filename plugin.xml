@@ -39,6 +39,14 @@
         </config-file>
 
         <source-file src="src/ios/FabricPlugin.m"/>
+
+        <framework src="libz.dylib" />
+        <framework src="libc++.dylib" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="Security.framework" weak="true" />
+
+        <framework src="lib/ios/Fabric.framework" custom="true" />
+        <framework src="lib/ios/Crashlytics.framework" custom="true" />
     </platform>
 
 </plugin>
