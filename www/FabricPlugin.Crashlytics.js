@@ -63,7 +63,7 @@ var FabricCrashlytics = (function () {
                 key: key
             };
 
-            window.fabric.core.execPlugin('setObjectValueForKey', defaults);
+            window.fabric.core.execPlugin('setStringValueForKey', defaults);
         }
     }, {
         key: 'setIntValueForKey',

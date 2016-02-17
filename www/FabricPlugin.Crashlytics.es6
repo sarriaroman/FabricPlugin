@@ -44,7 +44,7 @@ class FabricCrashlytics {
             key: key
         };
 
-        window.fabric.core.execPlugin('setObjectValueForKey', defaults);
+        window.fabric.core.execPlugin('setStringValueForKey', defaults);
     }
 
     setIntValueForKey(value, key) {

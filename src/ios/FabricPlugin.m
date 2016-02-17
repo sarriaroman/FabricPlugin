@@ -25,7 +25,7 @@
 // Log
 - (void)addLog:(CDVInvokedUrlCommand*)command;
 
-- (void)setObjectValueForKey:(CDVInvokedUrlCommand*)command;
+- (void)setStringValueForKey:(CDVInvokedUrlCommand*)command;
 - (void)setIntValueForKey:(CDVInvokedUrlCommand*)command;
 - (void)setBoolValueForKey:(CDVInvokedUrlCommand*)command;
 - (void)setFloatValueForKey:(CDVInvokedUrlCommand*)command;
@@ -134,7 +134,7 @@
 }
 
 #pragma mark - Custom Keys
-- (void)setObjectValueForKey:(CDVInvokedUrlCommand*)command
+- (void)setStringValueForKey:(CDVInvokedUrlCommand*)command
 {
     NSMutableDictionary *options = [command argumentAtIndex:0];
     NSString *value = [options objectForKey:@"value"];
