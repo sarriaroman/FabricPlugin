@@ -2,22 +2,16 @@
 
 ## Installation
 
-1) Make sure that you have [Node](http://nodejs.org/) and [Cordova CLI](https://github.com/apache/cordova-cli) or [PhoneGap's CLI](https://github.com/mwbrooks/phonegap-cli) installed on your machine.
-
-2) ***(Important)*** Add Fabric SDK to the Android / iOS project [Fabric.io](https://fabric.io)
-
-3) Follow the steps to setup the SDK in your project.
-
-4) Add a plugin to your project using Cordova CLI:
+1. Make sure that you have [Node](http://nodejs.org/) and [Cordova CLI](https://github.com/apache/cordova-cli) or [PhoneGap's CLI](https://github.com/mwbrooks/phonegap-cli) installed on your machine.
+1. Setup your [Fabric.io](https://fabric.io) account and get your API Key and Build Secret from your [organization page](https://www.fabric.io/settings/organizations/).
+1. Add a plugin to your project using Cordova CLI, specifying the keys with the `--variable` argument:
 
 ```bash
-cordova plugin add https://github.com/sarriaroman/FabricPlugin
-```
+# Install from NPM registry:
+cordova plugin add cordova-fabric-plugin --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
 
-Or using PhoneGap CLI:
-
-```bash
-phonegap local plugin add https://github.com/sarriaroman/FabricPlugin
+# Or install directly from git:
+cordova plugin add https://github.com/sarriaroman/FabricPlugin@x.x.x  --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
 ```
 
 ## Modules
