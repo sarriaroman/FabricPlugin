@@ -1,0 +1,22 @@
+
+def packageName = getPackageName()
+
+android {
+    defaultConfig {
+        applicationId packageName
+    }
+}
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+dependencies {
+    compile 'com.crashlytics.sdk.android:crashlytics:2.5.5'
+}
+
+def getPackageName() {
+    def config = file("res/xml/config.xml").getText()
+    def xml = new XmlParser(false, false).parseText(config)
+    return xml.attribute("id")
+}

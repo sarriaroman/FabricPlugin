@@ -15,11 +15,21 @@
   },
   "keywords": [
     "cordova",
+    "fabric",
+    "crashlytics",
+    "answers",
     "device",
     "ecosystem:cordova",
     "cordova-android",
     "cordova-ios"
   ],
   "author": "Roman A. Sarria",
+  "contributors": [
+      {
+          "name": "Justin Unterreiner",
+          "email": "justin.unterreiner@gmail.com",
+          "url": "https://github.com/Justin-Credible"
+      }
+  ],
   "license": "MIT"
 }
