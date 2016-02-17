@@ -18,8 +18,15 @@ import android.util.Log;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
+import io.fabric.sdk.android.Fabric;
+
 public class FabricPlugin extends CordovaPlugin {
 	private final String pluginName = "FabricPlugin";
+
+	@Override
+	protected void pluginInitialize() {
+		Fabric.with(this.cordova.getActivity().getApplicationContext(), new Crashlytics(), new Answers());
+	}
 
 	@Override
 	public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {

@@ -37,6 +37,13 @@
 
 @implementation FabricPlugin
 
+#pragma mark - Plugin Initialization
+
+- (void)pluginInitialize
+{
+    [Fabric with:@[[Crashlytics class], [Answers class]]];
+}
+
 #pragma mark - Events
 
 -(void) sendSignUp:(CDVInvokedUrlCommand *)command {
