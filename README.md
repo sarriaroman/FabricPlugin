@@ -1,144 +1,107 @@
-# Fabric Plugin for Cordova > 3.0 (iOS and Android)
+# Fabric Plugin for Cordova
 
-## Installation
+This is a [Cordova](http://cordova.apache.org/) plugin for [Fabric.io](https://www.fabric.io)'s Crashlytics and Answers services.
+
+It requires Cordova 3.x or newer (tested on 5.4.0) and has APIs for iOS and Android.
+
+The iOS version uses Fabric SDK 1.6.5 and Crashlytics SDK 3.6.0 framework bundles which are located in `lib/ios`.
+
+The Android version uses Gradle to get the Fabric SDK (`io.fabric.tools:gradle:1.+`) and the Crashlytics SDK (`com.crashlytics.sdk.android:crashlytics:2.5.5`) from Maven repositories when the plugin is added.
+
+# Install
 
 1. Make sure that you have [Node](http://nodejs.org/) and [Cordova CLI](https://github.com/apache/cordova-cli) or [PhoneGap's CLI](https://github.com/mwbrooks/phonegap-cli) installed on your machine.
 1. Setup your [Fabric.io](https://fabric.io) account and get your API Key and Build Secret from your [organization page](https://www.fabric.io/settings/organizations/).
 1. Add a plugin to your project using Cordova CLI, specifying the keys with the `--variable` argument:
 
 ```bash
-# Install from NPM registry:
+# Install from npm registry:
 cordova plugin add cordova-fabric-plugin --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
 
-# Or install directly from git:
+# Or to install directly from github:
+# (replace x.x.x with the tag of the version your want, or omit for HEAD)
 cordova plugin add https://github.com/sarriaroman/FabricPlugin@x.x.x  --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
 ```
 
-## Modules
+# Usage
 
-- Core  
-> This module is intended to contain the core and generic features
+The plugin is available via global variable named `fabric`. It exposes APIs for both Crashlytics and Answers.
 
-```
-window.fabric.core
-```
+A TypeScript definition file for the JavaScript interface is available in the `typings` directory.
 
-- Answers  
-> This module contains the Crashlytics Answers API. This is not yet complete but has all the mayor features  
+# API Documentation
 
-```
-window.fabric.Answers
-```
+See `typings/cordova-fabric-plugin.d.ts` for documentation of the JavaScript APIs including call signatures and parameter types.
 
-- Crashlytics
-> This module has the Crashlytics features  
+# Examples
 
-```
-window.fabric.Crashlytics
+Below are a few examples; see the API documentation for a complete list.
+
+## Simulate a native crash
+
+```javascript
+window.fabric.crashlytics.addLog("about to send a crash for testing!");
+window.fabric.crashlytics.sendCrash();
 ```
 
-## Usage
-
-### Answers
-
-#### Example
-
-```
-// Register a successful login
-window.fabric.Answers.sendLogIn();
+## Set information for crash reports
+```javascript
+window.fabric.crashlytics.setUserIdentifier("123");
+window.fabric.crashlytics.setUserName("Some Guy");
+window.fabric.crashlytics.setUserEmail("some.guy@email.com");
+window.fabric.crashlytics.setStringValueForKey("bar", "foo");
 ```
 
-### Methods
-
-#### sendLogIn()  
-Sends a login event  
-
-#### sendSignUp()  
-Sends a SignUp event  
-
-#### sendContentView(name, type, id, attributes)  
-Sends a Content View event with the parameters:  
-- Name: name of View  
-- type: Type of View  
-- id: the ID of the View  
-- attributes: Object containing extra attributes to be set in the event ( Must be an Object )  
-
-#### sendScreenView(name, id, attributes)  
-Sends a Content View with Screen parameter in the type. Required parameters:  
-- Name: name of View  
-- id: the ID of the View  
-- attributes: Object containing extra attributes to be set in the event ( Must be an Object )  
-
-#### sendCustomEvent(name, attributes)  
-Sends a Custom Event. Required parameters:  
-- Name: name of View  
-- attributes: Object containing custom information to be set in the event ( Must be an Object )  
-
-
-### Crashlytics
-
-```js
-function sendCrashWithData() {
-	window.fabric.Crashlytics.setUserIdentifier('TheIdentifier');
-    window.fabric.Crashlytics.setUserName('My Name');
-    window.fabric.Crashlytics.setUserEmail('some@example.com');
-
-    window.fabric.Crashlytics.setStringValueForKey('MyString', 'stringkey');
-    window.fabric.Crashlytics.setIntValueForKey(200, 'intkey');
-    window.fabric.Crashlytics.setBoolValueForKey(true, 'boolkey');
-    window.fabric.Crashlytics.setFloatValueForKey(1.5, 'floatkey');
-
-    window.fabric.Crashlytics.addLog('This my a log message from JS!');
-    window.fabric.Crashlytics.addLog('This is another log message from JS!');
-    window.fabric.Crashlytics.sendCrash();
-}
+## Send a Sign Up event
+```javascript
+window.fabric.answers.sendSignUp("Facebook", true);
 ```
 
-### Methods
+## Send a Sign Up event (with custom attributes)
+```javascript
+var attributes = {
+    foo: "data",
+    bar: true,
+};
 
-#### setUserIdentifier(value)
-Set the user identifier value
+window.fabric.answers.sendSignUp("Facebook", true, attributes);
+```
 
-#### setUserName(value) - iOS, Android
-Set the username
+## Send a Add To Cart event
+```javascript
+window.fabric.answers.sendAddToCart(29.95, "USD", "Foo Bar Shirt", "apparel", "123");
+```
 
-#### setUserEmail(value) - iOS, Android
-Set the user email
+# Notes
 
-#### setStringValueForKey(value, key) - iOS, Android
-Set String value for key
+## Automatic Configuration of Fabric SDKs
 
-#### setIntValueForKey(value, key) - iOS, Android
-Set integer value for key
+A normal installation for the Fabric SDKs involves downloading the Fabric tool and pointing it at your native code project. This tool takes care of adding references and modifying your build scripts and/or project files.
 
-#### setBoolValueForKey(value, key) - iOS, Android
-Set boolean for key
+This plugin instead performs these steps via two build hooks located in the `hooks` directory: `after_plugin_install` and `before_plugin_uninstall`.
 
-#### setFloatValueForKey(value, key) - iOS, Android
-Set float for key
+This allows you to avoid using the Fabric tool as well as omit your `platforms` directory to source control.
 
-#### addLog(value) - iOS, Android
-Add log for the crash.
+## Automatic Debug Symbol Upload on Build
 
-#### sendCrash() - iOS, Android
-Send a (fatal) crash to the backand of CrashLytics.
+The Fabric SDK comes with a command line tool that takes care of uploading debug symbols after a build so that they can be used when viewing crash reports.
 
-#### sendNonFatalCrash() - Android
-Send a (non fatal) crash to the backand of CrashLytics.
+For iOS, our build hook adds a build script phase block to execute Fabric's uploader command line tool.
 
-## Changes
+For Android, our build hook modifies the `build.gradle` file to delegate to Fabric's uploader Gradle task.
 
-- Javascript code moved to ES6  
-- Separated in modules  
-- Full support for both OSs with same API  
-- Support for Non Fatal Crashes in Android.
+## Modification of JavaScript APIs
 
-## ToDo  
+If you want to modify the JavaScript APIs in `www` you'll need to edit the corresponding `*.es6` files. Once complete, execute `npm transpile` which will transpile the ES6 code into ES5 JavaScript.
 
-- Implement missing events from Answers API
-- Move to the entire Fabric API instead of Just Crashlytics
+If you do not have Babel installed globally, you'll first need to run `npm install` to install the development dependencies.
 
-## AUTHORS
+Note that you only need to do this if you are making modifications to the `*.es6` source files in your own fork of the plugin.
 
-- Román A. Sarria  
-- Based on Crashlytics plugin: https://github.com/francescobitmunks/cordova-plugin-crashlytics
+# Authors
+
+- [Román A. Sarria](https://github.com/sarriaroman)
+- [Justin Unterreiner](https://github.com/Justin-Credible)
+- Based on the following plugins:
+ - https://github.com/francescobitmunks/cordova-plugin-crashlytics
+ - https://github.com/smistry-toushay/cordova-crashlytics-plugin

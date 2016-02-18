@@ -14,64 +14,36 @@ class FabricCrashlytics {
         window.fabric.core.execPlugin('sendCrash');
     }
 
-    setUserIdentifier(userIdentifier) {
-        const defaults = {
-            value: userIdentifier
-        };
+    sendNonFatalCrash() {
+        window.fabric.core.execPlugin('sendNonFatalCrash');
+    }
 
-        window.fabric.core.execPlugin('setUserIdentifier', defaults);
+    setUserIdentifier(userIdentifier) {
+        window.fabric.core.execPlugin('setUserIdentifier', userIdentifier);
     }
 
     setUserName(userName) {
-        const defaults = {
-            value: userName
-        };
-
-        window.fabric.core.execPlugin('setUserName', defaults);
+        window.fabric.core.execPlugin('setUserName', userName);
     }
 
     setUserEmail(userEmail) {
-        const defaults = {
-            value: userEmail
-        };
-
-        window.fabric.core.execPlugin('setUserEmail', defaults);
+        window.fabric.core.execPlugin('setUserEmail', userEmail);
     }
 
     setStringValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setStringValueForKey', defaults);
+        window.fabric.core.execPlugin('setStringValueForKey', value, key);
     }
 
     setIntValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setIntValueForKey', defaults);
+        window.fabric.core.execPlugin('setIntValueForKey', value, key);
     }
 
     setBoolValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setBoolValueForKey', defaults);
+        window.fabric.core.execPlugin('setBoolValueForKey', value, key);
     }
 
     setFloatValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setFloatValueForKey', defaults);
+        window.fabric.core.execPlugin('setFloatValueForKey', value, key);
     }
 
 }

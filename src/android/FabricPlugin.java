@@ -7,15 +7,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.AddToCartEvent;
 import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.AnswersEvent;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
+import com.crashlytics.android.answers.InviteEvent;
+import com.crashlytics.android.answers.LevelEndEvent;
+import com.crashlytics.android.answers.LevelStartEvent;
 import com.crashlytics.android.answers.LoginEvent;
+import com.crashlytics.android.answers.PurchaseEvent;
+import com.crashlytics.android.answers.RatingEvent;
+import com.crashlytics.android.answers.SearchEvent;
+import com.crashlytics.android.answers.ShareEvent;
 import com.crashlytics.android.answers.SignUpEvent;
+import com.crashlytics.android.answers.StartCheckoutEvent;
 
 import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Iterator;
 
 import io.fabric.sdk.android.Fabric;
@@ -32,10 +44,12 @@ public class FabricPlugin extends CordovaPlugin {
 	public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
 		Log.d(pluginName, pluginName + " called with options: " + data);
 
-		if (action.equals("sendCrash")) {
-			sendCrash(data, callbackContext);
-		} else if (action.equals("addLog")) {
+		if (action.equals("addLog")) {
 			addLog(data, callbackContext);
+		} else if (action.equals("sendCrash")) {
+			sendCrash(data, callbackContext);
+		} else if (action.equals("sendNonFatalCrash")) {
+			sendNonFatalCrash(data, callbackContext);
 		} else if (action.equals("setUserIdentifier")) {
 			setUserIdentifier(data, callbackContext);
 		} else if (action.equals("setUserName")) {
@@ -50,105 +64,54 @@ public class FabricPlugin extends CordovaPlugin {
 			setBoolValueForKey(data, callbackContext);
 		} else if (action.equals("setFloatValueForKey")) {
 			setFloatValueForKey(data, callbackContext);
-		} else {
-			Class params[] = new Class[2];
-			params[0] = JSONArray.class;
-			params[1] = CallbackContext.class;
-
-			try{
-				Method method = this.getClass().getDeclaredMethod(action, params);
-				method.invoke(this, data, callbackContext);
-			}catch(Exception ex){
-				ex.printStackTrace();
-			}
+		} else if (action.equals("sendPurchase")) {
+			sendPurchase(data, callbackContext);
+		} else if (action.equals("sendAddToCart")) {
+			sendAddToCart(data, callbackContext);
+		} else if (action.equals("sendStartCheckout")) {
+			sendStartCheckout(data, callbackContext);
+		} else if (action.equals("sendSearch")) {
+			sendSearch(data, callbackContext);
+		} else if (action.equals("sendShare")) {
+			sendShare(data, callbackContext);
+		} else if (action.equals("sendRatedContent")) {
+			sendRatedContent(data, callbackContext);
+		} else if (action.equals("sendSignUp")) {
+			sendSignUp(data, callbackContext);
+		} else if (action.equals("sendLogIn")) {
+			sendLogIn(data, callbackContext);
+		} else if (action.equals("sendInvite")) {
+			sendInvite(data, callbackContext);
+		} else if (action.equals("sendLevelStart")) {
+			sendLevelStart(data, callbackContext);
+		} else if (action.equals("sendLevelEnd")) {
+			sendLevelEnd(data, callbackContext);
+		} else if (action.equals("sendContentView")) {
+			sendContentView(data, callbackContext);
+		} else if (action.equals("sendCustomEvent")) {
+			sendCustomEvent(data, callbackContext);
 		}
+		else {
+			callbackContext.error(pluginName + ": Method '" + action + "' not supported.");
+			return false;
+		}
+
 		return true;
 	}
 
-	/* Answers Events */
+	/* Crashlytics Events */
 
-	public void sendSignUp(final JSONArray data, final CallbackContext context) {
-		this.cordova.getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				SignUpEvent evt = new SignUpEvent();
-				Answers.getInstance()
-					.logSignUp(evt);
-			}
-		});
+	private void addLog(final JSONArray data,
+						final CallbackContext callbackContext) {
+
+		String message = data.optString(0);
+		Crashlytics.log(message);
+		callbackContext.success();
 	}
-
-	public void sendLogIn(final JSONArray data, final CallbackContext context) {
-		this.cordova.getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				LoginEvent evt = new LoginEvent();
-				Answers.getInstance()
-					.logLogin(evt);
-			}
-		});
-	}
-
-	public void sendContentView(final JSONArray data, final CallbackContext context) {
-		final JSONObject obj = data.optJSONObject(0);
-
-		this.cordova.getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				ContentViewEvent evt = new ContentViewEvent();
-
-				evt.putContentName(obj.optString("name"));
-    			evt.putContentType(obj.optString("type"));
-    			evt.putContentId(obj.optString("id"));
-
-				if( obj.has("attributes") ) {
-					JSONObject json = obj.optJSONObject("attributes");
-
-					Iterator<String> keys = json.keys();
-				    while(keys.hasNext()){
-				        String key = keys.next();
-
-						try {
-							evt.putCustomAttribute(key, json.getString(key));
-						} catch(Exception e) {}
-				    }
-				}
-
-				Answers.getInstance().logContentView(evt);
-			}
-		});
-	}
-
-	public void sendCustomEvent(final JSONArray data, final CallbackContext context) {
-		final JSONObject obj = data.optJSONObject(0);
-
-		this.cordova.getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				CustomEvent evt = new CustomEvent(obj.optString("name"));
-
-				if( obj.has("attributes") ) {
-					JSONObject json = obj.optJSONObject("attributes");
-
-					Iterator<String> keys = json.keys();
-				    while(keys.hasNext()){
-				        String key = keys.next();
-
-						try {
-							evt.putCustomAttribute(key, json.getString(key));
-						} catch(Exception e) {}
-				    }
-
-					Answers.getInstance().logCustom(evt);
-				}
-			}
-		});
-	}
-
-	/* Answers Events */
 
 	private void sendCrash(final JSONArray data,
-			final CallbackContext callbackContext) {
+						   final CallbackContext callbackContext) {
+
 		this.cordova.getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -158,135 +121,383 @@ public class FabricPlugin extends CordovaPlugin {
 	}
 
 	private void sendNonFatalCrash(final JSONArray data,
-			final CallbackContext callbackContext) {
+								   final CallbackContext callbackContext) {
+
 		this.cordova.getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Crashlytics.logException(new Throwable(
-						"Sending non fatal crash from JS"));
+				Crashlytics.logException(new Throwable(data.optString(0, "No Message Provided")));
 			}
 		});
 	}
 
-	private void addLog(final JSONArray data,
-			final CallbackContext callbackContext) {
-		try {
-			JSONObject obj = data.getJSONObject(0);
-			String message;
-			if (obj.has("message")) {
-				message = obj.getString("message");
-				Crashlytics.log(message);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private void setUserIdentifier(final JSONArray data,
-			final CallbackContext callbackContext) {
-		String identifier = getValueFromData(data);
-		if (identifier != null) {
-			Crashlytics.setUserIdentifier(identifier);
-		}
+								   final CallbackContext callbackContext) {
+
+		String identifier = data.optString(0);
+		Crashlytics.setUserIdentifier(identifier);
+		callbackContext.success();
 	}
 
 	private void setUserName(final JSONArray data,
-			final CallbackContext callbackContext) {
-		String userName = getValueFromData(data);
-		if (userName != null) {
-			Crashlytics.setUserName(userName);
-		}
+							 final CallbackContext callbackContext) {
+
+		String userName = data.optString(0);
+		Crashlytics.setUserName(userName);
+		callbackContext.success();
 	}
 
 	private void setUserEmail(final JSONArray data,
-			final CallbackContext callbackContext) {
-		String email = getValueFromData(data);
-		if (email != null) {
-			Crashlytics.setUserEmail(email);
-		}
+							  final CallbackContext callbackContext) {
+
+		String email = data.optString(0);
+		Crashlytics.setUserEmail(email);
+		callbackContext.success();
 	}
 
 	private void setStringValueForKey(final JSONArray data,
-			final CallbackContext callbackContext) {
-		String value = getValueFromData(data);
-		String key = getKeyFromData(data);
-		if (value != null && key != null) {
-			Crashlytics.setString(key, value);
-		}
+									  final CallbackContext callbackContext) {
+
+		String value = data.optString(0);
+		String key = data.optString(1);
+		Crashlytics.setString(key, value);
+		callbackContext.success();
 	}
 
 	private void setIntValueForKey(final JSONArray data,
-			final CallbackContext callbackContext) {
-		int value = -1;
-		try {
-			JSONObject obj = data.getJSONObject(0);
-			if (obj.has("value")) {
-				value = obj.getInt("value");
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		String key = getKeyFromData(data);
-		if (value != -1 && key != null) {
-			Crashlytics.setInt(key, value);
-		}
+								   final CallbackContext callbackContext) {
+
+		int value = data.optInt(0);
+		String key = data.optString(1);
+
+		Crashlytics.setInt(key, value);
+		callbackContext.success();
 	}
 
 	private void setBoolValueForKey(final JSONArray data,
-			final CallbackContext callbackContext) {
-		boolean value = true;
-		try {
-			JSONObject obj = data.getJSONObject(0);
-			if (obj.has("value")) {
-				value = obj.getBoolean("value");
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		String key = getKeyFromData(data);
-		if (key != null) {
-			Crashlytics.setBool(key, value);
-		}
+									final CallbackContext callbackContext) {
+
+		boolean value = data.optBoolean(0);
+		String key = data.optString(1);
+
+		Crashlytics.setBool(key, value);
+		callbackContext.success();
 	}
 
 	private void setFloatValueForKey(final JSONArray data,
-			final CallbackContext callbackContext) {
-		float value = -1;
-		try {
-			JSONObject obj = data.getJSONObject(0);
-			if (obj.has("value")) {
-				value = obj.getLong("value");
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		String key = getKeyFromData(data);
-		if (value != -1 && key != null) {
-			Crashlytics.setFloat(key, value);
-		}
+									 final CallbackContext callbackContext) {
+
+		float value = data.optLong(0);
+		String key = data.optString(1);
+
+		Crashlytics.setFloat(key, value);
+		callbackContext.success();
 	}
 
-	private String getValueFromData(JSONArray data) {
-		try {
-			JSONObject obj = data.getJSONObject(0);
-			if (obj.has("value")) {
-				return obj.getString("value");
+	/* Answers Events */
+
+	public void sendPurchase(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				PurchaseEvent evt = new PurchaseEvent();
+
+				if (!data.isNull(0)) {
+					evt.putItemPrice(new BigDecimal(data.optDouble(0, 0)));
+				}
+
+				try {
+					evt.putCurrency(Currency.getInstance(data.optString(1)));
+				}
+				catch (Exception ex) {
+					Log.w(pluginName, "Unable to parse currency: " + ex.getMessage());
+				}
+
+				evt.putSuccess(data.optBoolean(2, true));
+				evt.putItemName(data.optString(3));
+				evt.putItemType(data.optString(4));
+				evt.putItemId(data.optString(5));
+
+				if (!data.isNull(6)) {
+					populateCustomAttributes(evt, data.optJSONObject(5));
+				}
+
+				Answers.getInstance().logPurchase(evt);
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return null;
+		});
 	}
 
-	private String getKeyFromData(JSONArray data) {
-		try {
-			JSONObject obj = data.getJSONObject(0);
-			if (obj.has("key")) {
-				return obj.getString("key");
+	public void sendAddToCart(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				AddToCartEvent evt = new AddToCartEvent();
+
+				if (!data.isNull(0)) {
+					evt.putItemPrice(new BigDecimal(data.optDouble(0, 0)));
+				}
+
+				try {
+					evt.putCurrency(Currency.getInstance(data.optString(1)));
+				}
+				catch (Exception ex) {
+					Log.w(pluginName, "Unable to parse currency: " + ex.getMessage());
+				}
+
+				evt.putItemName(data.optString(2));
+				evt.putItemType(data.optString(3));
+				evt.putItemId(data.optString(4));
+
+				if (!data.isNull(5)) {
+					populateCustomAttributes(evt, data.optJSONObject(5));
+				}
+
+				Answers.getInstance().logAddToCart(evt);
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+		});
+	}
+
+	public void sendStartCheckout(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				StartCheckoutEvent evt = new StartCheckoutEvent();
+
+				if (!data.isNull(0)) {
+					evt.putTotalPrice(new BigDecimal(data.optDouble(0, 0)));
+				}
+
+				try {
+					evt.putCurrency(Currency.getInstance(data.optString(1)));
+				}
+				catch (Exception ex) {
+					Log.w(pluginName, "Unable to parse currency: " + ex.getMessage());
+				}
+
+				evt.putItemCount(data.optInt(2));
+
+				if (!data.isNull(3)) {
+					populateCustomAttributes(evt, data.optJSONObject(3));
+				}
+
+				Answers.getInstance().logStartCheckout(evt);
+			}
+		});
+	}
+
+	public void sendSearch(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				SearchEvent evt = new SearchEvent();
+
+				evt.putQuery(data.optString(0));
+
+				if (!data.isNull(1)) {
+					populateCustomAttributes(evt, data.optJSONObject(1));
+				}
+
+				Answers.getInstance().logSearch(evt);
+			}
+		});
+	}
+
+	public void sendShare(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				ShareEvent evt = new ShareEvent();
+
+				evt.putMethod(data.optString(0));
+				evt.putContentName(data.optString(1));
+				evt.putContentType(data.optString(2));
+				evt.putContentId(data.optString(3));
+
+				if (!data.isNull(4)) {
+					populateCustomAttributes(evt, data.optJSONObject(4));
+				}
+
+				Answers.getInstance().logShare(evt);
+			}
+		});
+	}
+
+	public void sendRatedContent(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				RatingEvent evt = new RatingEvent();
+
+				evt.putRating(data.optInt(0));
+				evt.putContentName(data.optString(1));
+				evt.putContentType(data.optString(2));
+				evt.putContentId(data.optString(3));
+
+				if (!data.isNull(4)) {
+					populateCustomAttributes(evt, data.optJSONObject(4));
+				}
+
+				Answers.getInstance().logRating(evt);
+			}
+		});
+	}
+
+	public void sendSignUp(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				SignUpEvent evt = new SignUpEvent();
+
+				evt.putMethod(data.optString(0, "Direct"));
+				evt.putSuccess(data.optBoolean(1, true));
+
+				if (!data.isNull(2)) {
+					populateCustomAttributes(evt, data.optJSONObject(2));
+				}
+
+				Answers.getInstance().logSignUp(evt);
+			}
+		});
+	}
+
+	public void sendLogIn(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				LoginEvent evt = new LoginEvent();
+
+				evt.putMethod(data.optString(0, "Direct"));
+				evt.putSuccess(data.optBoolean(1, true));
+
+				if (!data.isNull(2)) {
+					populateCustomAttributes(evt, data.optJSONObject(2));
+				}
+
+				Answers.getInstance().logLogin(evt);
+			}
+		});
+	}
+
+	public void sendInvite(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				InviteEvent evt = new InviteEvent();
+
+				evt.putMethod(data.optString(0, "Direct"));
+
+				if (!data.isNull(1)) {
+					populateCustomAttributes(evt, data.optJSONObject(1));
+				}
+
+				Answers.getInstance().logInvite(evt);
+			}
+		});
+	}
+
+	public void sendLevelStart(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				LevelStartEvent evt = new LevelStartEvent();
+
+				evt.putLevelName(data.optString(0));
+
+				if (!data.isNull(1)) {
+					populateCustomAttributes(evt, data.optJSONObject(1));
+				}
+
+				Answers.getInstance().logLevelStart(evt);
+			}
+		});
+	}
+
+	public void sendLevelEnd(final JSONArray data, final CallbackContext context) {
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				LevelEndEvent evt = new LevelEndEvent();
+
+				evt.putLevelName(data.optString(0));
+				evt.putScore(data.optInt(1));
+				evt.putSuccess(data.optBoolean(2, true));
+
+				if (!data.isNull(3)) {
+					populateCustomAttributes(evt, data.optJSONObject(3));
+				}
+
+				Answers.getInstance().logLevelEnd(evt);
+			}
+		});
+	}
+
+	public void sendContentView(final JSONArray data, final CallbackContext context) {
+
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				ContentViewEvent evt = new ContentViewEvent();
+
+				evt.putContentName(data.optString(0));
+				evt.putContentType(data.optString(1));
+				evt.putContentId(data.optString(2));
+
+				if (!data.isNull(3)) {
+					populateCustomAttributes(evt, data.optJSONObject(3));
+				}
+
+				Answers.getInstance().logContentView(evt);
+			}
+		});
+	}
+
+	public void sendCustomEvent(final JSONArray data, final CallbackContext context) {
+
+		this.cordova.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				CustomEvent evt = new CustomEvent(data.optString(0, "Custom Event"));
+
+				if (!data.isNull(1)) {
+					populateCustomAttributes(evt, data.optJSONObject(1));
+				}
+
+				Answers.getInstance().logCustom(evt);
+			}
+		});
+	}
+
+	/* Helpers */
+
+	/**
+	 * Helper method used to populate custom attributes of the given event with
+	 * the values propvided in the given JSON object.
+	 *
+	 * @param evt The event to populate with custom attribute key/value pairs.
+	 * @param attributes A JSON object of key/value pairs used to populate the event.
+	 */
+	private void populateCustomAttributes(AnswersEvent evt, JSONObject attributes) {
+
+		if (attributes == null || evt == null) {
+			return;
 		}
-		return null;
+
+		try {
+			Iterator<String> keys = attributes.keys();
+
+			while (keys.hasNext()) {
+				String key = keys.next();
+
+				try {
+					evt.putCustomAttribute(key, attributes.getString(key));
+				}
+				catch (Exception e) {
+					Log.w(pluginName, "Error while populating custom attribute with key '" + key + "': " + e.getMessage());
+				}
+			}
+		}
+		catch (Exception ex) {
+			Log.w(pluginName, "Error while populating custom attributes: " + ex.getMessage());
+		}
 	}
 }
