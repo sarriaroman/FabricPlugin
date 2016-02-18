@@ -40,21 +40,21 @@ Below are a few examples; see the API documentation for a complete list.
 ## Simulate a native crash
 
 ```javascript
-window.fabric.crashlytics.addLog("about to send a crash for testing!");
-window.fabric.crashlytics.sendCrash();
+window.fabric.Crashlytics.addLog("about to send a crash for testing!");
+window.fabric.Crashlytics.sendCrash();
 ```
 
 ## Set information for crash reports
 ```javascript
-window.fabric.crashlytics.setUserIdentifier("123");
-window.fabric.crashlytics.setUserName("Some Guy");
-window.fabric.crashlytics.setUserEmail("some.guy@email.com");
-window.fabric.crashlytics.setStringValueForKey("bar", "foo");
+window.fabric.Crashlytics.setUserIdentifier("123");
+window.fabric.Crashlytics.setUserName("Some Guy");
+window.fabric.Crashlytics.setUserEmail("some.guy@email.com");
+window.fabric.Crashlytics.setStringValueForKey("bar", "foo");
 ```
 
 ## Send a Sign Up event
 ```javascript
-window.fabric.answers.sendSignUp("Facebook", true);
+window.fabric.Answers.sendSignUp("Facebook", true);
 ```
 
 ## Send a Sign Up event (with custom attributes)
@@ -64,12 +64,12 @@ var attributes = {
     bar: true,
 };
 
-window.fabric.answers.sendSignUp("Facebook", true, attributes);
+window.fabric.Answers.sendSignUp("Facebook", true, attributes);
 ```
 
 ## Send a Add To Cart event
 ```javascript
-window.fabric.answers.sendAddToCart(29.95, "USD", "Foo Bar Shirt", "apparel", "123");
+window.fabric.Answers.sendAddToCart(29.95, "USD", "Foo Bar Shirt", "apparel", "123");
 ```
 
 # Notes

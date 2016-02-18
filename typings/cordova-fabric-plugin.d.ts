@@ -244,19 +244,19 @@ declare module FabricPlugin {
          * 
          * https://docs.fabric.io/android/answers/answers-events.html#content-view
          */
-        sendContentView(name: string, type: string, id: string, attributes: Attributes): void;
+        sendContentView(name: string, type?: string, id?: string, attributes?: Attributes): void;
 
         /**
          * Shortcut for sendContentView(...) using type of "Screen".
          */
-        sendScreenView(name: string, id: string, attributes: Attributes): void;
+        sendScreenView(name: string, id: string, attributes?: Attributes): void;
 
         /**
          * Send a custom tracking event with the given name.
          * 
          * https://docs.fabric.io/android/answers/answers-events.html#custom-event
          */
-        sendCustomEvent(name: string, attributes: Attributes): void;
+        sendCustomEvent(name: string, attributes?: Attributes): void;
     }
 
     /**
