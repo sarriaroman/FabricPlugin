@@ -2,10 +2,10 @@
 
 <plugin id="com.sarriaroman.fabric" version="0.6.0" xmlns="http://www.phonegap.com/ns/plugins/1.0">
 
-    <name>Fabric</name>
-    <description>Cordova Fabric Plugin for iOS and Android</description>
+    <name>cordova-fabric-plugin</name>
+    <description>Cordova Fabric.io Plugin</description>
     <license>MIT</license>
-    <keywords>cordova,fabric,craslytics,answers,events,ios,android</keywords>
+    <keywords>cordova,fabric,craslytics,answers,events,device,ios,android</keywords>
 
     <preference name="FABRIC_API_KEY" />
     <preference name="FABRIC_API_SECRET" />

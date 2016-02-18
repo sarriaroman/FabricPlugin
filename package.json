@@ -18,6 +18,7 @@
     "fabric",
     "crashlytics",
     "answers",
+    "events",
     "device",
     "ecosystem:cordova",
     "cordova-android",
@@ -25,11 +26,17 @@
   ],
   "author": "Roman A. Sarria",
   "contributors": [
-      {
-          "name": "Justin Unterreiner",
-          "email": "justin.unterreiner@gmail.com",
-          "url": "https://github.com/Justin-Credible"
-      }
+    {
+      "name": "Justin Unterreiner",
+      "email": "justin.unterreiner@gmail.com",
+      "url": "https://github.com/Justin-Credible"
+    }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "transpile": "node_modules/.bin/babel www/*.es6 --out-dir ."
+  },
+  "devDependencies": {
+    "babel": "^5.8.35"
+  }
 }
