@@ -12,88 +12,52 @@ var FabricCrashlytics = (function () {
     _createClass(FabricCrashlytics, [{
         key: 'addLog',
         value: function addLog(message) {
-            var defaults = {
-                message: message
-            };
-
-            window.fabric.core.execPlugin('addLog', defaults);
+            window.fabric.core.execPlugin('addLog', [message]);
         }
     }, {
         key: 'sendCrash',
         value: function sendCrash() {
-            window.fabric.core.execPlugin('sendCrash');
+            window.fabric.core.execPlugin('sendCrash', []);
         }
     }, {
         key: 'sendNonFatalCrash',
-        value: function sendNonFatalCrash() {
-            window.fabric.core.execPlugin('sendNonFatalCrash');
+        value: function sendNonFatalCrash(message) {
+            window.fabric.core.execPlugin('sendNonFatalCrash', [message]);
         }
     }, {
         key: 'setUserIdentifier',
         value: function setUserIdentifier(userIdentifier) {
-            var defaults = {
-                value: userIdentifier
-            };
-
-            window.fabric.core.execPlugin('setUserIdentifier', defaults);
+            window.fabric.core.execPlugin('setUserIdentifier', [userIdentifier]);
         }
     }, {
         key: 'setUserName',
         value: function setUserName(userName) {
-            var defaults = {
-                value: userName
-            };
-
-            window.fabric.core.execPlugin('setUserName', defaults);
+            window.fabric.core.execPlugin('setUserName', [userName]);
         }
     }, {
         key: 'setUserEmail',
         value: function setUserEmail(userEmail) {
-            var defaults = {
-                value: userEmail
-            };
-
-            window.fabric.core.execPlugin('setUserEmail', defaults);
+            window.fabric.core.execPlugin('setUserEmail', [userEmail]);
         }
     }, {
         key: 'setStringValueForKey',
         value: function setStringValueForKey(value, key) {
-            var defaults = {
-                value: value,
-                key: key
-            };
-
-            window.fabric.core.execPlugin('setObjectValueForKey', defaults);
+            window.fabric.core.execPlugin('setStringValueForKey', [value, key]);
         }
     }, {
         key: 'setIntValueForKey',
         value: function setIntValueForKey(value, key) {
-            var defaults = {
-                value: value,
-                key: key
-            };
-
-            window.fabric.core.execPlugin('setIntValueForKey', defaults);
+            window.fabric.core.execPlugin('setIntValueForKey', [value, key]);
         }
     }, {
         key: 'setBoolValueForKey',
         value: function setBoolValueForKey(value, key) {
-            var defaults = {
-                value: value,
-                key: key
-            };
-
-            window.fabric.core.execPlugin('setBoolValueForKey', defaults);
+            window.fabric.core.execPlugin('setBoolValueForKey', [value, key]);
         }
     }, {
         key: 'setFloatValueForKey',
         value: function setFloatValueForKey(value, key) {
-            var defaults = {
-                value: value,
-                key: key
-            };
-
-            window.fabric.core.execPlugin('setFloatValueForKey', defaults);
+            window.fabric.core.execPlugin('setFloatValueForKey', [value, key]);
         }
     }]);
 

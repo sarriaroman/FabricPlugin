@@ -3,75 +3,66 @@ class FabricCrashlytics {
     constructor() {}
 
     addLog(message) {
-        const defaults = {
-            message: message
-        };
-
-        window.fabric.core.execPlugin('addLog', defaults);
+        window.fabric.core.execPlugin('addLog', [
+            message
+        ]);
     }
 
     sendCrash() {
-        window.fabric.core.execPlugin('sendCrash');
+        window.fabric.core.execPlugin('sendCrash', [
+        ]);
+    }
+
+    sendNonFatalCrash(message) {
+        window.fabric.core.execPlugin('sendNonFatalCrash', [
+            message
+        ]);
     }
 
     setUserIdentifier(userIdentifier) {
-        const defaults = {
-            value: userIdentifier
-        };
-
-        window.fabric.core.execPlugin('setUserIdentifier', defaults);
+        window.fabric.core.execPlugin('setUserIdentifier', [
+            userIdentifier
+        ]);
     }
 
     setUserName(userName) {
-        const defaults = {
-            value: userName
-        };
-
-        window.fabric.core.execPlugin('setUserName', defaults);
+        window.fabric.core.execPlugin('setUserName', [
+            userName
+        ]);
     }
 
     setUserEmail(userEmail) {
-        const defaults = {
-            value: userEmail
-        };
-
-        window.fabric.core.execPlugin('setUserEmail', defaults);
+        window.fabric.core.execPlugin('setUserEmail', [
+            userEmail
+        ]);
     }
 
     setStringValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setObjectValueForKey', defaults);
+        window.fabric.core.execPlugin('setStringValueForKey', [
+            value,
+            key
+        ]);
     }
 
     setIntValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setIntValueForKey', defaults);
+        window.fabric.core.execPlugin('setIntValueForKey', [
+            value,
+            key
+        ]);
     }
 
     setBoolValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setBoolValueForKey', defaults);
+        window.fabric.core.execPlugin('setBoolValueForKey', [
+            value,
+            key
+        ]);
     }
 
     setFloatValueForKey(value, key) {
-        const defaults = {
-            value: value,
-            key: key
-        };
-
-        window.fabric.core.execPlugin('setFloatValueForKey', defaults);
+        window.fabric.core.execPlugin('setFloatValueForKey', [
+            value,
+            key
+        ]);
     }
 
 }

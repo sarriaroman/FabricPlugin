@@ -8,7 +8,7 @@ class FabricPlugin {
     }
 
     execPlugin(method, parameters) {
-        exec(null, null, this.pluginCallName(), method, [parameters]);
+        exec(null, null, this.pluginCallName(), method, parameters);
     }
 
 }

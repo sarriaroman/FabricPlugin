@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin id="com.sarriaroman.fabric" version="0.6.0" xmlns="http://www.phonegap.com/ns/plugins/1.0">
+<plugin id="com.sarriaroman.fabric" version="1.0.0" xmlns="http://www.phonegap.com/ns/plugins/1.0">
 
-    <name>Fabric</name>
-    <description>Cordova Fabric Plugin for iOS and Android</description>
+    <name>cordova-fabric-plugin</name>
+    <description>Cordova Fabric.io Plugin</description>
     <license>MIT</license>
-    <keywords>cordova,fabric,craslytics,answers,events,ios,android</keywords>
+    <keywords>cordova,fabric,craslytics,answers,events,device,ios,android</keywords>
+
+    <preference name="FABRIC_API_KEY" />
+    <preference name="FABRIC_API_SECRET" />
+
+    <hook type="after_plugin_install" src="hooks/after_plugin_install.js" />
+    <hook type="before_plugin_uninstall" src="hooks/before_plugin_uninstall.js" />
 
     <js-module name="FabricPlugin" src="www/FabricPlugin.js">
         <clobbers target="window.fabric.core"/>
@@ -24,10 +30,21 @@
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="FabricPlugin">
                 <param name="android-package" value="com.sarriaroman.fabric.FabricPlugin"/>
+                <param name="onload" value="true" />
             </feature>
         </config-file>
 
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="application">
+            <meta-data android:name="io.fabric.ApiKey" android:value="$FABRIC_API_KEY"/>
+        </config-file>
+
         <source-file src="src/android/FabricPlugin.java" target-dir="src/com/sarriaroman/fabric"/>
+
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
     </platform>
 
     <!-- ios -->
@@ -35,10 +52,26 @@
         <config-file parent="/*" target="config.xml">
             <feature name="FabricPlugin">
                 <param name="ios-package" value="FabricPlugin"/>
+                <param name="onload" value="true" />
             </feature>
         </config-file>
 
+        <config-file target="*-Info.plist" parent="Fabric">
+            <dict>
+                <key>APIKey</key>
+                <string>$FABRIC_API_KEY</string>
+            </dict>
+        </config-file>
+
         <source-file src="src/ios/FabricPlugin.m"/>
+
+        <framework src="libz.dylib" />
+        <framework src="libc++.dylib" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="Security.framework" weak="true" />
+
+        <framework src="lib/ios/Fabric.framework" custom="true" />
+        <framework src="lib/ios/Crashlytics.framework" custom="true" />
     </platform>
 
 </plugin>
