@@ -35,8 +35,5 @@
   "license": "MIT",
   "scripts": {
     "transpile": "node_modules/.bin/babel www/*.es6 --out-dir ."
-  },
-  "devDependencies": {
-    "babel": "^5.8.35"
   }
 }

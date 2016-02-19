@@ -81,10 +81,10 @@ fabric.Answers.sendLevelStart("Chemical Plant Zone - Act 1");
 fabric.Answers.sendLevelStart("Chemical Plant Zone - Act 1", { "key": "value" });
 
 fabric.Answers.sendLevelEnd();
-fabric.Answers.sendLevelEnd("");
-fabric.Answers.sendLevelEnd("", 9000);
-fabric.Answers.sendLevelEnd("", 9000, true);
-fabric.Answers.sendLevelEnd("", 9000, true, { "key": "value" });
+fabric.Answers.sendLevelEnd("Brinstar");
+fabric.Answers.sendLevelEnd("Brinstar", 9000);
+fabric.Answers.sendLevelEnd("Brinstar", 9000, true);
+fabric.Answers.sendLevelEnd("Brinstar", 9000, true, { "key": "value" });
 
 fabric.Answers.sendContentView("Home");
 fabric.Answers.sendContentView("Home", "Page");

@@ -51,9 +51,17 @@
 #pragma mark - Answers
 
 -(void) sendPurchase:(CDVInvokedUrlCommand *)command {
-    
+
     [self.commandDelegate runInBackground:^{
-        [Answers logPurchaseWithPrice:[command argumentAtIndex:0 withDefault: nil]
+
+        NSNumber *priceNumber = [command argumentAtIndex:0 withDefault: nil andClass: [NSNumber class]];
+        NSDecimalNumber *price = nil;
+
+        if (priceNumber) {
+            price = [NSDecimalNumber decimalNumberWithDecimal:[priceNumber decimalValue]];
+        }
+
+        [Answers logPurchaseWithPrice:price
                              currency:[command argumentAtIndex:1 withDefault: nil]
                               success:[command argumentAtIndex:2 withDefault: nil]
                              itemName:[command argumentAtIndex:3 withDefault: nil]
@@ -64,9 +72,16 @@
 }
 
 -(void) sendAddToCart:(CDVInvokedUrlCommand *)command {
+
+    NSNumber *priceNumber = [command argumentAtIndex:0 withDefault: nil andClass: [NSNumber class]];
+    NSDecimalNumber *price = nil;
+    
+    if (priceNumber) {
+        price = [NSDecimalNumber decimalNumberWithDecimal:[priceNumber decimalValue]];
+    }
     
     [self.commandDelegate runInBackground:^{
-        [Answers logAddToCartWithPrice:[command argumentAtIndex:0 withDefault: nil]
+        [Answers logAddToCartWithPrice:price
                               currency:[command argumentAtIndex:1 withDefault: nil]
                               itemName:[command argumentAtIndex:2 withDefault: nil]
                               itemType:[command argumentAtIndex:3 withDefault: nil]
@@ -76,9 +91,16 @@
 }
 
 -(void) sendStartCheckout:(CDVInvokedUrlCommand *)command {
+
+    NSNumber *priceNumber = [command argumentAtIndex:0 withDefault: nil andClass: [NSNumber class]];
+    NSDecimalNumber *price = nil;
+    
+    if (priceNumber) {
+        price = [NSDecimalNumber decimalNumberWithDecimal:[priceNumber decimalValue]];
+    }
     
     [self.commandDelegate runInBackground:^{
-        [Answers logStartCheckoutWithPrice:[command argumentAtIndex:0 withDefault: nil]
+        [Answers logStartCheckoutWithPrice:price
                                   currency:[command argumentAtIndex:1 withDefault: nil]
                                  itemCount:[command argumentAtIndex:2 withDefault: nil]
                           customAttributes:[command argumentAtIndex:3 withDefault: nil]];

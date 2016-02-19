@@ -37,14 +37,14 @@ See `typings/cordova-fabric-plugin.d.ts` for documentation of the JavaScript API
 
 Below are a few examples; see the API documentation for a complete list.
 
-## Simulate a native crash
+## Simulate a Native Crash
 
 ```javascript
 window.fabric.Crashlytics.addLog("about to send a crash for testing!");
 window.fabric.Crashlytics.sendCrash();
 ```
 
-## Set information for crash reports
+## Set Information for Crash Reports
 ```javascript
 window.fabric.Crashlytics.setUserIdentifier("123");
 window.fabric.Crashlytics.setUserName("Some Guy");
@@ -52,12 +52,12 @@ window.fabric.Crashlytics.setUserEmail("some.guy@email.com");
 window.fabric.Crashlytics.setStringValueForKey("bar", "foo");
 ```
 
-## Send a Sign Up event
+## Send a Sign Up Event
 ```javascript
 window.fabric.Answers.sendSignUp("Facebook", true);
 ```
 
-## Send a Sign Up event (with custom attributes)
+## Send a Sign Up Event (with custom attributes)
 ```javascript
 var attributes = {
     foo: "data",
@@ -67,7 +67,7 @@ var attributes = {
 window.fabric.Answers.sendSignUp("Facebook", true, attributes);
 ```
 
-## Send a Add To Cart event
+## Send a Add To Cart Event
 ```javascript
 window.fabric.Answers.sendAddToCart(29.95, "USD", "Foo Bar Shirt", "apparel", "123");
 ```
@@ -80,7 +80,7 @@ A normal installation for the Fabric SDKs involves downloading the Fabric tool a
 
 This plugin instead performs these steps via two build hooks located in the `hooks` directory: `after_plugin_install` and `before_plugin_uninstall`.
 
-This allows you to avoid using the Fabric tool as well as omit your `platforms` directory to source control.
+This allows you to avoid using the Fabric tool as well as omit your `platforms` directory from source control.
 
 ## Automatic Debug Symbol Upload on Build
 
@@ -90,13 +90,9 @@ For iOS, our build hook adds a build script phase block to execute Fabric's uplo
 
 For Android, our build hook modifies the `build.gradle` file to delegate to Fabric's uploader Gradle task.
 
-## Modification of JavaScript APIs
+# Contributing
 
-If you want to modify the JavaScript APIs in `www` you'll need to edit the corresponding `*.es6` files. Once complete, execute `npm transpile` which will transpile the ES6 code into ES5 JavaScript.
-
-If you do not have Babel installed globally, you'll first need to run `npm install` to install the development dependencies.
-
-Note that you only need to do this if you are making modifications to the `*.es6` source files in your own fork of the plugin.
+If you wish to contribute please see `CONTRIBUTING.md`.
 
 # Authors
 

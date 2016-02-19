@@ -187,10 +187,10 @@ public class FabricPlugin extends CordovaPlugin {
 	private void setFloatValueForKey(final JSONArray data,
 									 final CallbackContext callbackContext) {
 
-		float value = data.optLong(0);
+		double value = data.optDouble(0);
 		String key = data.optString(1);
 
-		Crashlytics.setFloat(key, value);
+		Crashlytics.setDouble(key, value);
 		callbackContext.success();
 	}
 
