@@ -106,7 +106,7 @@ module.exports = {
                 // Dealing with a build phase block.
 
                 // If the name of this block matches ours, then we want to delete it.
-                shouldDelete = buildPhase.name.indexOf(comment) !== -1;
+                shouldDelete = buildPhase.name && buildPhase.name.indexOf(comment) !== -1;
             }
             else {
                 // Dealing with a comment block.
