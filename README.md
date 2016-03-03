@@ -20,7 +20,7 @@ cordova plugin add cordova-fabric-plugin --variable FABRIC_API_KEY=XXX --variabl
 
 # Or to install directly from github:
 # (replace x.x.x with the tag of the version your want, or omit for HEAD)
-cordova plugin add https://github.com/sarriaroman/FabricPlugin@x.x.x  --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
+cordova plugin add https://github.com/sarriaroman/FabricPlugin#x.x.x  --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
 ```
 
 # Usage
