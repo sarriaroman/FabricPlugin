@@ -4,9 +4,7 @@ If you wish to contribute please keep the following in mind.
 
 ## Modification of JavaScript APIs
 
-If you want to modify the JavaScript APIs in `www` you'll need to edit the corresponding `*.es6` files. Once complete, execute `npm run-script transpile` which will transpile the ES6 code into ES5 JavaScript.
-
-If you do not have Babel installed globally, you'll first need to run `npm install bower@5.8.35` before executing the transpile script.
+If you want to modify the JavaScript APIs in `www` you'll need to edit the corresponding `*.es6` files. Once you've made your modiciations, execute `npm run-script transpile` which will transpile the ES6 code into ES5 JavaScript (you may need to run `npm install` first to install Babel from the developer dependencies).
 
 Note that you only need to do this if you are making modifications to the ES6 source files. Also, please do not modify the `*.js` files directly--they should always be generated from the ES6 source files.
 
