@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin id="com.sarriaroman.fabric" version="1.0.0" xmlns="http://www.phonegap.com/ns/plugins/1.0">
+<plugin id="com.sarriaroman.fabric" version="1.0.5" xmlns="http://www.phonegap.com/ns/plugins/1.0">
 
     <name>cordova-fabric-plugin</name>
     <description>Cordova Fabric.io Plugin</description>
