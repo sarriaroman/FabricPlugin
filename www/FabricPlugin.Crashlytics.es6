@@ -14,6 +14,12 @@ class FabricCrashlytics {
     }
 
     sendNonFatalCrash(message) {
+        window.fabric.core.execPlugin('sendNonFatalCrash', [
+            message
+        ]);
+    }
+
+    recordError(message) {
         window.fabric.core.execPlugin('recordError', [
             message
         ]);

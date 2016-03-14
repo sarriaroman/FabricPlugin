@@ -98,6 +98,7 @@ If you wish to contribute please see `CONTRIBUTING.md`.
 
 - [Román A. Sarria](https://github.com/sarriaroman)
 - [Justin Unterreiner](https://github.com/Justin-Credible)
+- [Damian Small](https://github.com/nbdamian)
 - Based on the following plugins:
  - https://github.com/francescobitmunks/cordova-plugin-crashlytics
  - https://github.com/smistry-toushay/cordova-crashlytics-plugin
