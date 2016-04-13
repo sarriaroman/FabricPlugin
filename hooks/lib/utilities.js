@@ -8,7 +8,7 @@ var fs = require("fs");
 
 /**
  * Used to get the name of the application as defined in the config.xml.
- * 
+ *
  * @param {object} context - The Cordova context.
  * @returns {string} The value of the name element in config.xml.
  */
@@ -20,7 +20,7 @@ function getAppName(context) {
 
 /**
  * Used to get the path to the build.gradle file for the Android project.
- * 
+ *
  * @returns {string} The path to the build.gradle file.
  */
 function getBuildGradlePath() {
@@ -33,19 +33,19 @@ module.exports = {
      * The ID of the plugin; this should match the ID in plugin.xml.
      */
     getPluginId: function () {
-        return "com.sarriaroman.fabric";
+        return "cordova-fabric-plugin";
     },
 
     /**
      * Used to get the plugin configuration for the given platform.
-     * 
+     *
      * The plugin configuration object will have the API and secret keys
      * for the Fabric.io service that were specified when the plugin
      * was installed.
-     * 
+     *
      * This configuration is obtained from, where "ios" is the platform name:
      *    platforms/ios/ios.json
-     * 
+     *
      * @param {string} platform - The platform to get plugin configuration for, either "ios" or "android".
      * @returns {string} The path to the platform's plugin JSON configuration file.
      */
@@ -70,7 +70,7 @@ module.exports = {
 
     /**
      * Used to get the path to the XCode project's .pbxproj file.
-     * 
+     *
      * @param {object} context - The Cordova context.
      * @returns The path to the XCode project's .pbxproj file.
      */
@@ -83,7 +83,7 @@ module.exports = {
 
     /**
      * Used to read the contents of the Android project's build.gradle file.
-     * 
+     *
      * @returns {string} The contents of the Android project's build.gradle file.
      */
     readBuildGradle: function() {
@@ -93,7 +93,7 @@ module.exports = {
     /**
      * Used to write the given build.gradle contents to the Android project's
      * build.gradle file.
-     * 
+     *
      * @param {string} buildGradle The body of the build.gradle file to write.
      */
     writeBuildGradle: function(buildGradle) {
