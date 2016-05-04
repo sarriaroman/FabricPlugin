@@ -249,7 +249,7 @@
 
 - (void)recordError:(CDVInvokedUrlCommand*)command
 {
-    [[Crashlytics sharedInstance] recordError];
+    [[Crashlytics sharedInstance] recordError:error]
 }
 
 - (void)setStringValueForKey:(CDVInvokedUrlCommand*)command

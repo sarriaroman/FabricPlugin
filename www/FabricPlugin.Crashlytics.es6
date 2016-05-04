@@ -19,9 +19,8 @@ class FabricCrashlytics {
         ]);
     }
 
-    recordError(message) {
+    recordError() {
         window.fabric.core.execPlugin('recordError', [
-            message
         ]);
     }
 
