@@ -26,8 +26,8 @@ var FabricCrashlytics = (function () {
         }
     }, {
         key: 'recordError',
-        value: function recordError(message) {
-            window.fabric.core.execPlugin('recordError', [message]);
+        value: function recordError() {
+            window.fabric.core.execPlugin('recordError', []);
         }
     }, {
         key: 'setUserIdentifier',
