@@ -25,6 +25,11 @@ var FabricCrashlytics = (function () {
             window.fabric.core.execPlugin('sendNonFatalCrash', [message]);
         }
     }, {
+        key: 'recordError',
+        value: function recordError() {
+            window.fabric.core.execPlugin('recordError', []);
+        }
+    }, {
         key: 'setUserIdentifier',
         value: function setUserIdentifier(userIdentifier) {
             window.fabric.core.execPlugin('setUserIdentifier', [userIdentifier]);

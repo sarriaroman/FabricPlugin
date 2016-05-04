@@ -44,6 +44,18 @@ window.fabric.Crashlytics.addLog("about to send a crash for testing!");
 window.fabric.Crashlytics.sendCrash();
 ```
 
+## Send a Non Fatal Crash / Recording Errors
+
+```javascript
+//Android
+window.fabric.Crashlytics.addLog("about to send a non fatal crash for testing!");
+window.fabric.Crashlytics.sendNonFatalCrash();
+
+//IOS
+window.fabric.Crashlytics.addLog("about to send a non fatal crash for testing!");
+window.fabric.Crashlytics.recordError();
+```
+
 ## Set Information for Crash Reports
 ```javascript
 window.fabric.Crashlytics.setUserIdentifier("123");
@@ -98,6 +110,7 @@ If you wish to contribute please see `CONTRIBUTING.md`.
 
 - [Román A. Sarria](https://github.com/sarriaroman)
 - [Justin Unterreiner](https://github.com/Justin-Credible)
+- [Damian Small](https://github.com/nbdamian)
 - Based on the following plugins:
  - https://github.com/francescobitmunks/cordova-plugin-crashlytics
  - https://github.com/smistry-toushay/cordova-crashlytics-plugin
