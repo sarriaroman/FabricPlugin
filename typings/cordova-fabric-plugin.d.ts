@@ -46,6 +46,11 @@ declare module FabricPlugin {
         sendNonFatalCrash(message: string): void;
 
         /**
+         * Used to record a non-fatal error message (iOS only).
+         */
+        recordError(message: string, code: number): void;
+
+        /**
          * Sets the user's identifier for logging to Crashlytics backend.
          */
         setUserIdentifier(userId: string): void;

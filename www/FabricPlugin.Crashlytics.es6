@@ -19,6 +19,13 @@ class FabricCrashlytics {
         ]);
     }
 
+    recordError(message, code) {
+        window.fabric.core.execPlugin('recordError', [
+            message,
+            code
+        ]);
+    }
+
     setUserIdentifier(userIdentifier) {
         window.fabric.core.execPlugin('setUserIdentifier', [
             userIdentifier

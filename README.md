@@ -44,6 +44,22 @@ window.fabric.Crashlytics.addLog("about to send a crash for testing!");
 window.fabric.Crashlytics.sendCrash();
 ```
 
+## Send a Non Fatal Crash / Recording Errors
+
+```javascript
+//Android and iOS
+window.fabric.Crashlytics.addLog("about to send a non fatal crash for testing!");
+window.fabric.Crashlytics.sendNonFatalCrash("Error message");
+
+//iOS only. Send message and error code
+window.fabric.Crashlytics.addLog("about to send a non fatal crash for testing!");
+window.fabric.Crashlytics.recordError("Error message", -1);
+```
+
+Issue Grouping
+
+Crashes are grouped via stack trace analysis. Logged errors are grouped, instead, by the error domain and code. Remember that this means error issues can span many different call sites.
+
 ## Set Information for Crash Reports
 ```javascript
 window.fabric.Crashlytics.setUserIdentifier("123");
