@@ -10,6 +10,8 @@ fabric.Crashlytics.sendCrash();
 
 fabric.Crashlytics.sendNonFatalCrash("Error");
 
+fabric.Crashlytics.recordError("Error", -1);
+
 fabric.Crashlytics.setUserIdentifier("123");
 
 fabric.Crashlytics.setUserName("bob");

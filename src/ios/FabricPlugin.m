@@ -36,6 +36,8 @@
 - (void)setIntValueForKey:(CDVInvokedUrlCommand*)command;
 - (void)setBoolValueForKey:(CDVInvokedUrlCommand*)command;
 - (void)setFloatValueForKey:(CDVInvokedUrlCommand*)command;
+- (void)recordError:(CDVInvokedUrlCommand*)command;
+- (void)sendNonFatalCrash:(CDVInvokedUrlCommand*)command;
 
 @end
 
@@ -288,6 +290,26 @@
     {
         [[Crashlytics sharedInstance] setFloatValue:value forKey:key];
     }
+}
+
+- (void)recordError:(CDVInvokedUrlCommand*)command
+{
+    NSString *description = NSLocalizedString([command argumentAtIndex:0 withDefault:@"No Message Provided"], nil);
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: description };
+    
+    NSNumber *defaultCode = [NSNumber numberWithInt:-1];
+    int code = [[command argumentAtIndex:1 withDefault:defaultCode] intValue];
+    
+    NSString *domain = [[NSBundle mainBundle] bundleIdentifier];
+    
+    NSError *error = [NSError errorWithDomain: domain code: code userInfo: userInfo];
+    
+    [[Crashlytics sharedInstance] recordError:error];
+}
+
+- (void)sendNonFatalCrash:(CDVInvokedUrlCommand*)command
+{
+    [self recordError: command];
 }
 
 @end
