@@ -23,6 +23,8 @@ cordova plugin add cordova-fabric-plugin --variable FABRIC_API_KEY=XXX --variabl
 cordova plugin add https://github.com/sarriaroman/FabricPlugin#x.x.x  --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
 ```
 
+> Note: If you have never registered an app with your organization, the [organization page](https://www.fabric.io/settings/organizations/) may redirect you to a wizard preventing you from obtaining your keys. You may be able to obtain your keys from [this page](https://fabric.io/kits/ios/crashlytics/install). Scroll down to the "Run Script Build Phase" block. The first, shorter string is the API key and the second, longer string is the build secret. If that doesn't work you can follow the wizard and integrate the kit into a dummy "Hello World" project which should then unlock the organization page.
+
 # Usage
 
 The plugin is available via global variable named `fabric`. It exposes APIs for both Crashlytics and Answers.
