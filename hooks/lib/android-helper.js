@@ -10,6 +10,7 @@ module.exports = {
         var buildGradle = utilities.readBuildGradle();
 
         buildGradle +=  [
+            "",
             "// Fabric Cordova Plugin - Start Fabric Build Tools ",
             "buildscript {",
             "    repositories {",
@@ -31,7 +32,7 @@ module.exports = {
 
         var buildGradle = utilities.readBuildGradle();
 
-        buildGradle = buildGradle.replace(/\n\/\/ Fabric Cordova Plugin - Start Fabric Build Tools[\s\S]*\/\/ Fabric Cordova Plugin - End Fabric Build Tools\n/, "");
+        buildGradle = buildGradle.replace(/\n\/\/ Fabric Cordova Plugin - Start Fabric Build Tools[\s\S]*\/\/ Fabric Cordova Plugin - End Fabric Build Tools/, "");
 
         utilities.writeBuildGradle(buildGradle);
     }
