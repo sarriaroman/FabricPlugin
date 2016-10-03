@@ -1,6 +1,6 @@
 {
   "name": "cordova-fabric-plugin",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Cordova Fabric.io Plugin",
   "cordova": {
     "id": "cordova-fabric-plugin",
