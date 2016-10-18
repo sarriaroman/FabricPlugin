@@ -34,7 +34,7 @@ module.exports = {
             utilities.getAppName(context),
             "/Plugins/",
             utilities.getPluginId(),
-            "/Fabric.framework/run ",
+            "/Crashlytics.framework/run ",
             pluginConfig.apiKey,
             " ",
             pluginConfig.apiSecret,
