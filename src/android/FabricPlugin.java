@@ -219,7 +219,7 @@ public class FabricPlugin extends CordovaPlugin {
 				evt.putItemId(data.optString(5));
 
 				if (!data.isNull(6)) {
-					populateCustomAttributes(evt, data.optJSONObject(5));
+					populateCustomAttributes(evt, data.optJSONObject(6));
 				}
 
 				Answers.getInstance().logPurchase(evt);
