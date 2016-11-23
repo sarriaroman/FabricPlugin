@@ -131,15 +131,15 @@ public class FabricPlugin extends CordovaPlugin {
 					try {
 						JSONArray stackTrace = data.getJSONArray(1);
 
-						ArrayList<StackTraceElement> trace = new ArrayList<StackTraceElement>();
+						StackTraceElement[] trace = new StackTraceElement[stackTrace.length()];
 						for(int i = 0; i < stackTrace.length(); i++) {
 	 						JSONObject elem = stackTrace.getJSONObject(i);
 
-	 						trace.add(new StackTraceElement("undefined", elem.getString("functionName"),elem.getString("fileName"), elem.getInt("lineNumber")));
+	 						trace[i] = new StackTraceElement("undefined", elem.getString("functionName"),elem.getString("fileName"), elem.getInt("lineNumber"));
 	 					}
 
 						JavaScriptException ex = new JavaScriptException(data.getString(0));
-	                    ex.setStackTrace((StackTraceElement[])trace.toArray());
+	                    ex.setStackTrace(trace);
 
 	                    Crashlytics.logException(ex);
 					} catch (JSONException e) {
