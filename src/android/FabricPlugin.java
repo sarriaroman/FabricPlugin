@@ -126,21 +126,25 @@ public class FabricPlugin extends CordovaPlugin {
 		this.cordova.getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (data.length == 2) {
+				if (data.length() == 2) {
 					// well, we got more, let's asume arg 2 was a stack trace
-					JSONArray stackTrace = data.getJSONArray(1);
+					try {
+						JSONArray stackTrace = data.getJSONArray(1);
 
-					ArrayList<StackTraceElement> trace = new ArrayList<StackTraceElement>();
-					for(int i = 0; i < stackTrace.length(); i++) {
- 						JSONObject elem = stackTrace.getJSONObject(i);
+						ArrayList<StackTraceElement> trace = new ArrayList<StackTraceElement>();
+						for(int i = 0; i < stackTrace.length(); i++) {
+	 						JSONObject elem = stackTrace.getJSONObject(i);
 
- 						trace.add(new StackTraceElement("undefined", elem.get("functionName"),elem.get("fileName"), elem.get("lineNumber")));
- 					}
+	 						trace.add(new StackTraceElement("undefined", elem.getString("functionName"),elem.getString("fileName"), elem.getInt("lineNumber")));
+	 					}
 
-					JavaScriptException ex = new JavaScriptException(data.getString(0));
-                    ex.setStackTrace((StackTraceElement[])trace.toArray());
+						JavaScriptException ex = new JavaScriptException(data.getString(0));
+	                    ex.setStackTrace((StackTraceElement[])trace.toArray());
 
-                    Crashlytics.logException(ex);
+	                    Crashlytics.logException(ex);
+					} catch (JSONException e) {
+						Crashlytics.logException(e);
+					}
 				} else {
 					Crashlytics.logException(new Throwable(data.optString(0, "No Message Provided")));
 				}
