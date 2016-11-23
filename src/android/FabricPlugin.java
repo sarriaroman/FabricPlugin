@@ -128,7 +128,7 @@ public class FabricPlugin extends CordovaPlugin {
 			public void run() {
 				if (data.length == 2) {
 					// well, we got more, let's asume arg 2 was a stack trace
-					JSONArray stackTrace = args.getJSONArray(1);
+					JSONArray stackTrace = data.getJSONArray(1);
 
 					ArrayList<StackTraceElement> trace = new ArrayList<StackTraceElement>();
 					for(int i = 0; i < stackTrace.length(); i++) {
