@@ -9,14 +9,14 @@ declare module FabricPlugin {
 
         /**
          * API for interacting with the Crashlytics kit.
-         * 
+         *
          * https://docs.fabric.io/ios/crashlytics/index.html
          */
         Crashlytics: Crashlytics;
 
         /**
          * API for interacting with the Answers kit.
-         * 
+         *
          * https://docs.fabric.io/ios/answers/index.html
          */
         Answers: Answers;
@@ -24,7 +24,7 @@ declare module FabricPlugin {
 
     /**
      * API for interacting with the Crashlytics kit.
-     * 
+     *
      * https://docs.fabric.io/ios/crashlytics/index.html
      */
     interface Crashlytics {
@@ -43,7 +43,7 @@ declare module FabricPlugin {
         /**
          * Used to log a non-fatal error message (Android only).
          */
-        sendNonFatalCrash(message: string): void;
+        sendNonFatalCrash(message: string, stacktrace?: any): void;
 
         /**
          * Used to record a non-fatal error message (iOS only).
@@ -88,18 +88,18 @@ declare module FabricPlugin {
 
     /**
      * API for interacting with the Answers kit.
-     * 
+     *
      * https://docs.fabric.io/ios/answers/index.html
      */
     interface Answers {
 
         /**
          * Sends the Purchase tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#purchase
-         * 
+         *
          * @param itemPrice The item's amount in the currency specified.
          * @param currency The ISO4217 currency code.
          * @param success Was the purchase completed succesfully?
@@ -112,11 +112,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Add To Cart tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#add-to-cart
-         * 
+         *
          * @param itemPrice The item's amount in the currency specified.
          * @param currency The ISO4217 currency code.
          * @param itemName The human-readable name for the item.
@@ -128,11 +128,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Start Checkout tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#start-checkout
-         * 
+         *
          * @param totalPrice The total price of all items in cart in the currency specified.
          * @param currency The ISO4217 currency code.
          * @param itemCount The count of items in cart.
@@ -142,9 +142,9 @@ declare module FabricPlugin {
 
         /**
          * Sends the Search tracking event.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#search
-         * 
+         *
          * @param query What the user is searching for.
          * @param attributes Any additional user-defined attributes to be logged.
          */
@@ -152,11 +152,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Share tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#share
-         * 
+         *
          * @param method The method used to share content.
          * @param contentName The description of the content.
          * @param contentType The type or genre of content.
@@ -167,11 +167,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Rated Content tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#rated-content
-         * 
+         *
          * @param rating An integer rating of the content.
          * @param contentName The human-readable name of content.
          * @param contentType The category your item falls under.
@@ -182,11 +182,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Sign Up tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#sign-up
-         * 
+         *
          * @param method An optional description of the sign up method (Twitter, Facebook, etc.); defaults to "Direct".
          * @param success An optional flag that indicates sign up success; defaults to true.
          * @param attributes Any additional user-defined attributes to be logged.
@@ -195,11 +195,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Log In tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#log-in
-         * 
+         *
          * @param method An optional description of the sign in method (Twitter, Facebook, etc.); defaults to "Direct".
          * @param success An optional flag that indicates sign in success; defaults to true.
          * @param attributes Any additional user-defined attributes to be logged.
@@ -208,11 +208,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Invite tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#invite
-         * 
+         *
          * @param method An optional description of the sign in method (Twitter, Facebook, etc.); defaults to "Direct".
          * @param attributes Any additional user-defined attributes to be logged.
          */
@@ -220,11 +220,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Level Start tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#level-start
-         * 
+         *
          * @param levelName String key describing the level.
          * @param attributes Any additional user-defined attributes to be logged.
          */
@@ -232,11 +232,11 @@ declare module FabricPlugin {
 
         /**
          * Sends the Level End tracking event.
-         * 
+         *
          * All parameters are optional.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#level-end
-         * 
+         *
          * @param levelName String key describing the level.
          * @param score The score for this level.
          * @param success Completed the level or failed trying.
@@ -246,7 +246,7 @@ declare module FabricPlugin {
 
         /**
          * Send the Content View tracking event.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#content-view
          */
         sendContentView(name: string, type?: string, id?: string, attributes?: Attributes): void;
@@ -258,7 +258,7 @@ declare module FabricPlugin {
 
         /**
          * Send a custom tracking event with the given name.
-         * 
+         *
          * https://docs.fabric.io/android/answers/answers-events.html#custom-event
          */
         sendCustomEvent(name: string, attributes?: Attributes): void;
