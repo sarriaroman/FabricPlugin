@@ -27,6 +27,7 @@ import android.util.Log;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Iterator;
 
@@ -122,11 +123,27 @@ public class FabricPlugin extends CordovaPlugin {
 
 	private void sendNonFatalCrash(final JSONArray data,
 								   final CallbackContext callbackContext) {
-
 		this.cordova.getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Crashlytics.logException(new Throwable(data.optString(0, "No Message Provided")));
+				if (data.length == 2) {
+					// well, we got more, let's asume arg 2 was a stack trace
+					JSONArray stackTrace = args.getJSONArray(1);
+
+					ArrayList<StackTraceElement> trace = new ArrayList<StackTraceElement>();
+					for(int i = 0; i < stackTrace.length(); i++) {
+ 						JSONObject elem = stackTrace.getJSONObject(i);
+
+ 						trace.add(new StackTraceElement("undefined", elem.get("functionName"),elem.get("fileName"), elem.get("lineNumber")));
+ 					}
+
+					JavaScriptException ex = new JavaScriptException(data.getString(0));
+                    ex.setStackTrace((StackTraceElement[])trace.toArray());
+
+                    Crashlytics.logException(ex);
+				} else {
+					Crashlytics.logException(new Throwable(data.optString(0, "No Message Provided")));
+				}
 			}
 		});
 	}
