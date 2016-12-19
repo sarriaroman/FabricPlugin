@@ -26,6 +26,7 @@ import com.crashlytics.android.answers.StartCheckoutEvent;
 import android.util.Log;
 
 import java.lang.reflect.Method;
+import java.lang.StackTraceElement;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
