@@ -21,8 +21,48 @@ var FabricCrashlytics = (function () {
         }
     }, {
         key: 'sendNonFatalCrash',
-        value: function sendNonFatalCrash(message) {
-            window.fabric.core.execPlugin('sendNonFatalCrash', [message]);
+        value: function sendNonFatalCrash(message, trace) {
+            var params = [message];
+
+            if (trace) {
+                // validate trace (easier here)
+                var tmp = [];
+
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
+
+                try {
+                    for (var _iterator = trace[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        var entry = _step.value;
+
+                        tmp.push({
+                            functionName: entry.functionName || 'unknown',
+                            fileName: entry.fileName || 'unknown',
+                            lineNumber: entry.lineNumber || 0
+                        });
+                    }
+                } catch (err) {
+                    _didIteratorError = true;
+                    _iteratorError = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion && _iterator['return']) {
+                            _iterator['return']();
+                        }
+                    } finally {
+                        if (_didIteratorError) {
+                            throw _iteratorError;
+                        }
+                    }
+                }
+
+                if (tmp.length > 0) {
+                    params.push(tmp);
+                }
+            }
+
+            window.fabric.core.execPlugin('sendNonFatalCrash', params);
         }
     }, {
         key: 'recordError',
