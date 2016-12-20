@@ -13,27 +13,10 @@ class FabricCrashlytics {
         ]);
     }
 
-    sendNonFatalCrash(message, trace) {
-        let params = [message];
-
-        if (trace) {
-            // validate trace (easier here)
-            let tmp = [];
-
-            for (let entry of trace) {
-                tmp.push({
-                    functionName: entry.functionName || 'unknown',
-                    fileName: entry.fileName || 'unknown',
-                    lineNumber: entry.lineNumber || 0
-                });
-            }
-
-            if (tmp.length > 0) {
-                params.push(tmp);
-            }
-        }
-
-        window.fabric.core.execPlugin('sendNonFatalCrash', params);
+    sendNonFatalCrash(message) {
+        window.fabric.core.execPlugin('sendNonFatalCrash', [
+            message
+        ]);
     }
 
     recordError(message, code) {
