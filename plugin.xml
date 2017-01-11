@@ -43,6 +43,7 @@
         </config-file>
 
         <source-file src="src/android/FabricPlugin.java" target-dir="src/com/sarriaroman/fabric"/>
+        <source-file src="src/android/JavaScriptException.java" target-dir="src/com/sarriaroman/fabric"/>
 
         <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
     </platform>
