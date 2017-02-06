@@ -29,21 +29,23 @@ module.exports = {
 
         // Build the body of the script to be executed during the build phase.
         // ../../plugins/plugin-id/lib/ios/Crashlytics.framework/run API_KEY SECRET_KEY
-        var script = [
-            "\"",
-            "\\\"",
-            utilities.getAppName(context),
-            "/Plugins/",
-            utilities.getPluginId(),
-            "/./Fabric.framework/run",
-            "\\\"",
-            " ",
-            pluginConfig.apiKey,
-            " ",
-            pluginConfig.apiSecret,
-            "\""
-        ].join("");
-
+//         var script = [
+//             "\"",
+//             "\\\"",
+//             utilities.getAppName(context),
+//             "/Plugins/",
+//             utilities.getPluginId(),
+//             "/./Fabric.framework/run",
+//             "\\\"",
+//             " ",
+//             pluginConfig.apiKey,
+//             " ",
+//             pluginConfig.apiSecret,
+//             "\""
+//         ].join("");
+        
+        var script = "./Fabric.framework/run " + " " + pluginConfig.apiKey + " " + pluginConfig.apiSecret;
+        
         // Generate a unique ID for our new build phase.
         var id = xcodeProject.generateUuid();
 
