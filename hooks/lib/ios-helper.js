@@ -43,12 +43,13 @@ module.exports = {
 //             pluginConfig.apiSecret,
 //             "\""
 //         ].join("");
-        
-        var script = '"' + "./Fabric.framework/run " + pluginConfig.apiKey + " " + pluginConfig.apiSecret + '"';
+//         // "${PODS_ROOT}"
+//         var script = '"' + "./Fabric.framework/run " + pluginConfig.apiKey + " " + pluginConfig.apiSecret + '"';
+//         var script = '"' + "./Fabric.framework/run " + pluginConfig.apiKey + " " + pluginConfig.apiSecret + '"';
+        var script ='"' + ' "${SRCROOT}"/ ' + utilities.getAppName(context) + "/Plugins/cordova-fabric-plugin/Fabric.framework/run" +  pluginConfig.apiKey + " " + pluginConfig.apiSecret + '"';
         
         // Generate a unique ID for our new build phase.
         var id = xcodeProject.generateUuid();
-
         // Create the build phase.
         xcodeProject.hash.project.objects.PBXShellScriptBuildPhase[id] = {
             isa: "PBXShellScriptBuildPhase",
