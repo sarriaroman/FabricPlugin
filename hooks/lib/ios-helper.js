@@ -44,7 +44,7 @@ module.exports = {
 //             "\""
 //         ].join("");
         
-        var script = "/Fabric.framework/run "  + pluginConfig.apiKey + " " + pluginConfig.apiSecret;
+        var script = "./Fabric.framework/run"  + "\"+ pluginConfig.apiKey + "\" + pluginConfig.apiSecret;
         
         // Generate a unique ID for our new build phase.
         var id = xcodeProject.generateUuid();
