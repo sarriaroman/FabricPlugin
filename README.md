@@ -11,7 +11,7 @@ The Android version uses Gradle to get the Fabric SDK (`io.fabric.tools:gradle:1
 # Install
 
 1. Make sure that you have [Node](http://nodejs.org/) and [Cordova CLI](https://github.com/apache/cordova-cli) or [PhoneGap's CLI](https://github.com/mwbrooks/phonegap-cli) installed on your machine.
-1. Setup your [Fabric.io](https://fabric.io) account and get your API Key and Build Secret from your [organization page](https://www.fabric.io/settings/organizations/).
+1. Setup your [Fabric.io](https://fabric.io) account and get your API Key and Build Secret from your [organization page](https://fabric.io/kits/android/crashlytics/install).
 1. Add a plugin to your project using Cordova CLI, specifying the keys with the `--variable` argument:
 
 ```bash
