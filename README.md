@@ -111,6 +111,26 @@ For iOS, our build hook adds a build script phase block to execute Fabric's uplo
 
 For Android, our build hook modifies the `build.gradle` file to delegate to Fabric's uploader Gradle task.
 
+## Updating Fabric and Crashlytics
+
+Fabric and Crashlytics can be udpated via [scripts/add-packages.sh](./scripts/add-packages.sh). This script creates a temporary directory, obtains packages from their cocoapods download locations, and overwrites the frameworks in [lib/ios](./lib/ios).
+
+To run the package update script:
+
+```sh
+npm run add-packages
+```
+
+
+The desired package versions are pulled from [package.json](./package.json):
+
+```json
+"packages": {
+    "fabric": "1.7.2",
+    "crashlytics": "3.9.3"
+}
+```
+
 # Contributing
 
 If you wish to contribute please see `CONTRIBUTING.md`.

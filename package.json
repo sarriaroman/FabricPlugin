@@ -29,7 +29,13 @@
         "name": "Justin Unterreiner",
         "email": "justin.unterreiner@gmail.com",
         "url": "https://github.com/Justin-Credible"
-    }],
+    },
+    {
+        "name": "Eric McNiece",
+        "email": "emcniece@gmail.com",
+        "url": "https://github.com/emcniece"
+    }
+    ],
     "license": "MIT",
     "scripts": {
         "transpile": "node_modules/.bin/babel www/*.es6 --out-dir .",
