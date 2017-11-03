@@ -32,9 +32,14 @@
     }],
     "license": "MIT",
     "scripts": {
-        "transpile": "node_modules/.bin/babel www/*.es6 --out-dir ."
+        "transpile": "node_modules/.bin/babel www/*.es6 --out-dir .",
+        "add-packages": "./scripts/add-packages.sh"
     },
     "devDependencies": {
         "babel": "^5.8.35"
+    },
+    "packages": {
+        "fabric": "1.7.2",
+        "crashlytics": "3.9.3"
     }
 }
