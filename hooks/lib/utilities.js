@@ -12,6 +12,11 @@ var fs = require("fs");
  * @returns {string} The path to the build.gradle file.
  */
 function getBuildGradlePath() {
+    var target = path.join("platforms", "android", "app", "build.gradle");
+    if (fs.existsSync(target)) {
+        return target;
+    }
+
     return path.join("platforms", "android", "build.gradle");
 };
 
