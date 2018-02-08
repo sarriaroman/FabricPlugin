@@ -28,7 +28,14 @@ dependencies {
 }
 
 def getPackageName() {
-    def config = file("res/xml/config.xml").getText()
+    def config = '';
+
+    if (file("src/main/res/xml/config.xml").exists()) {
+        config = file("src/main/res/xml/config.xml").getText()
+    } else {
+        config = file("res/xml/config.xml").getText()
+    }
+
     def xml = new XmlParser(false, false).parseText(config)
     def id = xml.attribute("id")
     return id.replaceAll('-','_')
