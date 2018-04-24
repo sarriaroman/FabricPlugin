@@ -46,19 +46,16 @@ public class FabricPlugin extends CordovaPlugin {
 
 	@Override
 	protected void pluginInitialize() {
-		String autoInit = "true";
+		boolean autoInit = true;
 		try {
 			Activity activity = this.cordova.getActivity();
 			ApplicationInfo ai = activity.getPackageManager().getApplicationInfo(activity.getPackageName(), PackageManager.GET_META_DATA);
 			Bundle bundle = ai.metaData;
-			String _autoInit = bundle.getString(autoInitKey);
-			if(_autoInit != null){
-				autoInit = _autoInit;
-			}
+			autoInit = bundle.getBoolean(autoInitKey);
 		} catch (Exception e) {
 			Log.e(pluginName, "Failed to load FABRIC_AUTO_INIT meta-data: " + e.getMessage());
 		}
-		if(autoInit.equals("true")){
+		if(autoInit){
 			initialize();
 		}
 	}
