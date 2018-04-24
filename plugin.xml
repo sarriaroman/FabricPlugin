@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin id="cordova-fabric-plugin" version="1.1.14-dev" xmlns="http://www.phonegap.com/ns/plugins/1.0">
+<plugin
+        id="cordova-fabric-plugin"
+        version="1.1.14-dev"
+        xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <name>cordova-fabric-plugin</name>
     <description>Cordova Fabric.io Plugin</description>
@@ -9,6 +13,7 @@
 
     <preference name="FABRIC_API_KEY" />
     <preference name="FABRIC_API_SECRET" />
+    <preference name="FABRIC_AUTO_INIT" default="true" />
 
     <hook type="after_plugin_install" src="hooks/after_plugin_add.js" />
     <hook type="after_platform_add" src="hooks/after_plugin_add.js" />
@@ -41,6 +46,7 @@
 
         <config-file target="AndroidManifest.xml" parent="application">
             <meta-data android:name="io.fabric.ApiKey" android:value="$FABRIC_API_KEY"/>
+            <meta-data android:name="FabricPlugin_AutoInit" android:value="$FABRIC_AUTO_INIT"/>
         </config-file>
 
         <source-file src="src/android/FabricPlugin.java" target-dir="src/com/sarriaroman/fabric"/>
@@ -62,6 +68,8 @@
             <dict>
                 <key>APIKey</key>
                 <string>$FABRIC_API_KEY</string>
+                <key>AutoInit</key>
+                <string>$FABRIC_AUTO_INIT</string>
                 <key>Kits</key>
                 <array>
                     <dict>

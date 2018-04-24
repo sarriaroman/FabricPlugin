@@ -21,6 +21,16 @@ var FabricPlugin = (function () {
         value: function execPlugin(method, parameters) {
             exec(null, null, this.pluginCallName(), method, parameters);
         }
+    }, {
+        key: 'initialize',
+        value: function initialize(success) {
+            exec(success, null, this.pluginCallName(), "initialize", []);
+        }
+    }, {
+        key: 'isInitialized',
+        value: function isInitialized(success) {
+            exec(success, null, this.pluginCallName(), "isInitialized", []);
+        }
     }]);
 
     return FabricPlugin;

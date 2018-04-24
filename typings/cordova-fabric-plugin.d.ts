@@ -6,6 +6,23 @@
 declare module FabricPlugin {
 
     interface FabricPluginStatic {
+        /**
+         * Manually initializes the plugin.
+         * Only relevant if the plugin --variable FABRIC_AUTO_INIT=false
+         *
+         * https://docs.fabric.io/android/crashlytics/advanced-setup.html#enable-opt-in-reporting
+         * https://docs.fabric.io/apple/crashlytics/advanced-setup.html#enable-opt-in-reporting
+         */
+        initialize: (success: () => void) => void;
+
+        /**
+         * Checks if the plugin is initialized.
+         * Only relevant if the plugin --variable FABRIC_AUTO_INIT=false
+         *
+         * https://docs.fabric.io/android/crashlytics/advanced-setup.html#enable-opt-in-reporting
+         * https://docs.fabric.io/apple/crashlytics/advanced-setup.html#enable-opt-in-reporting
+         */
+        isInitialized: (success: (initialized: boolean) => void) => void;
 
         /**
          * API for interacting with the Crashlytics kit.
