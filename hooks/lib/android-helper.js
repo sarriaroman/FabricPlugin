@@ -5,6 +5,30 @@ var utilities = require("./utilities");
 
 module.exports = {
 
+    fabricProperties: function () {
+        const config = utilities.getPluginConfig("android");
+        const targetDir = "platforms/android/app/";
+        const file = "fabric.properties";
+        const sep = path.sep;
+        const initDir = path.isAbsolute(targetDir) ? sep : '';
+
+        targetDir.split(sep).reduce((parentDir, childDir) => {
+            const curDir = path.resolve(parentDir, childDir);
+            if (!fs.existsSync(curDir)) {
+                fs.mkdirSync(curDir);
+            }
+            return curDir;
+        }, initDir);
+
+        var stream = fs.createWriteStream(targetDir + file);
+
+        stream.once('open', (fd) => {
+            stream.write("apiSecret=" + config.apiSecret + "\n");
+            stream.write("apiKey=" + config.apiKey);
+            stream.end();
+        });
+    },
+
     addFabricBuildToolsGradle: function() {
 
         var buildGradle = utilities.readBuildGradle();
