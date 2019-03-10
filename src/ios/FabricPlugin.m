@@ -295,14 +295,23 @@
 - (void)recordError:(CDVInvokedUrlCommand*)command
 {
     NSString *description = NSLocalizedString([command argumentAtIndex:0 withDefault:@"No Message Provided"], nil);
-    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: description };
+    NSString *description = NSLocalizedString([command argumentAtIndex:0 withDefault:@"No Message Provided"], nil);
     
     NSNumber *defaultCode = [NSNumber numberWithInt:-1];
-    int code = [[command argumentAtIndex:1 withDefault:defaultCode] intValue];
+    
+    id arg1 = [command argumentAtIndex:1 withDefault:defaultCode];
+    
+    int code = [defaultCode intValue];
+    if ([arg1 respondsToSelector:NSSelectorFromString(@"intValue")]) {
+        code = [arg1 intValue];
+    } else {
+        description = [NSString stringWithFormat:@"%@ %@", description, arg1];
+    }
     
     NSString *domain = [[NSBundle mainBundle] bundleIdentifier];
     
-    NSError *error = [NSError errorWithDomain: domain code: code userInfo: userInfo];
+    NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: description };
+    NSError *error = [NSError errorWithDomain:domain code: code userInfo:userInfo];
     
     [[Crashlytics sharedInstance] recordError:error];
 }

@@ -59,8 +59,9 @@ window.fabric.Crashlytics.sendNonFatalCrash("Error message");
 window.fabric.Crashlytics.addLog("about to send a non fatal crash for testing!");
 window.fabric.Crashlytics.recordError("Error message", -1);
 
-//Android only. Send stack trace with non fatal crash (requires https://www.stacktracejs.com/)
+//Android and iOS. Send stack trace with non fatal crash (requires https://www.stacktracejs.com/)
 window.fabric.Crashlytics.sendNonFatalCrash("Error message", StackTrace.getSync());
+// Stack trace is not completely supported on iOS. It concatenates the serialized argument object to the error message. Fabric.io currently truncates the concatenated string to 1024 charaters.
 ```
 
 Issue Grouping
