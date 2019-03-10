@@ -298,7 +298,30 @@
     NSDictionary *userInfo = @{ NSLocalizedDescriptionKey: description };
     
     NSNumber *defaultCode = [NSNumber numberWithInt:-1];
-    int code = [[command argumentAtIndex:1 withDefault:defaultCode] intValue];
+    int code = [defaultCode intValue];
+    
+    id arg1 = [command argumentAtIndex:1 withDefault:defaultCode];
+    if ([arg1 respondsToSelector:@selector(intValue)]) {
+        code = [arg1 intValue];
+    } else if ([arg1 isKindOfClass:[NSArray class]]) {
+        NSMutableArray *frameArray = [[NSMutableArray alloc] init];
+        
+        for (id entry in (NSArray* )arg1) {
+            if ([entry isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *stackTraceEntry = (NSDictionary*)entry;
+                
+                CLSStackFrame *stackFrame = [CLSStackFrame stackFrame];
+                
+                stackFrame.fileName = [stackTraceEntry valueForKey:@"fileName"];
+                stackFrame.symbol = [stackTraceEntry valueForKey:@"functionName"];
+                stackFrame.lineNumber = [[stackTraceEntry valueForKey:@"lineNumber"] intValue];
+                
+                [frameArray addObject:stackFrame];
+            }
+        }
+        
+        [[Crashlytics sharedInstance] recordCustomExceptionName:@"JavascriptError" reason:description frameArray:frameArray];
+    }
     
     NSString *domain = [[NSBundle mainBundle] bundleIdentifier];
     
