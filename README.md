@@ -59,7 +59,7 @@ window.fabric.Crashlytics.sendNonFatalCrash("Error message");
 window.fabric.Crashlytics.addLog("about to send a non fatal crash for testing!");
 window.fabric.Crashlytics.recordError("Error message", -1);
 
-//Android only. Send stack trace with non fatal crash (requires https://www.stacktracejs.com/)
+//Android and iOS. Send stack trace with non fatal crash (requires https://www.stacktracejs.com/)
 window.fabric.Crashlytics.sendNonFatalCrash("Error message", StackTrace.getSync());
 ```
 
