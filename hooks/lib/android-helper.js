@@ -17,7 +17,7 @@ module.exports = {
             "        maven { url 'https://maven.fabric.io/public' }",
             "    }",
             "    dependencies {",
-            "        classpath 'io.fabric.tools:gradle:1.+'",
+            "        classpath 'io.fabric.tools:gradle:1.27.1'",
             "    }",
             "}",
             "",
