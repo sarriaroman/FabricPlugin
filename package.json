@@ -51,7 +51,8 @@
         "crashlytics": "3.9.3"
     },
     "dependencies": {
-        "opencollective": "^1.0.3"
+        "opencollective": "^1.0.3",
+        "xcode": "^2.0.0"
     },
     "collective": {
         "type": "opencollective",
