@@ -8,7 +8,7 @@ It requires Cordova 6.x or newer (tested on 7.0.0) and has APIs for iOS and Andr
 
 The iOS version uses Fabric SDK 1.7.5 and Crashlytics SDK 3.10.1 framework bundles which are located in `lib/ios`.
 
-The Android version uses Gradle to get the Fabric SDK (`io.fabric.tools:gradle:1.+`) and the Crashlytics SDK (`com.crashlytics.sdk.android:crashlytics:2.9.1`) from Maven repositories when the plugin is added.
+The Android version uses Gradle to get the Fabric SDK (`io.fabric.tools:gradle:1.+`) and the Crashlytics SDK (`com.crashlytics.sdk.android:crashlytics:2.9.3`) from Maven repositories when the plugin is added.
 
 # Install
 
@@ -131,6 +131,32 @@ The desired package versions are pulled from [package.json](./package.json):
     "fabric": "1.7.2",
     "crashlytics": "3.9.3"
 }
+```
+
+## Opt-in reporting
+
+By default this plugin will automatically intialize the Fabric SDK on app startup and therefore assumes implicit user consent that information such as crash reports or analytics can be collected.
+
+Under the [EU's GDPR rules](https://www.eugdpr.org/) you may need to ensure that your users have given consent.
+
+This means you may need to [enable opt-in reporting](https://docs.fabric.io/apple/crashlytics/advanced-setup.html#enable-opt-in-reporting) to ask users consent before intializing the Fabric SDK which immediately begins reporting Answers and Crashlytics data.
+
+This plugin can be configured for manual initialization by setting the `FABRIC_AUTO_INIT` plugin variable to `false` when the plugin is installed:
+```bash
+cordova plugin add cordova-fabric-plugin --variable FABRIC_AUTO_INIT=false --variable FABRIC_API_KEY=XXX --variable FABRIC_API_SECRET=xxx
+```
+
+This enables you to gain user consent before manually intializing the SDK by calling:
+```javascript
+window.fabric.core.initialize();
+```
+
+You can check if the plugin has already been initialized with:
+
+```javascript
+window.fabric.core.isInitialized(function(initialized){
+    console.log("Fabric SDK " + (initialized ? "is" : "is not") + " initialized");
+});
 ```
 
 # Contributing

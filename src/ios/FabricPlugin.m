@@ -11,6 +11,11 @@
 
 @interface FabricPlugin : CDVPlugin
 
+@property (nonatomic) BOOL initialized;
+// Fabric
+-(void) initialize:(CDVInvokedUrlCommand *)command;
+-(void) isInitialized:(CDVInvokedUrlCommand *)command;
+
 // Answers
 - (void)sendPurchase:(CDVInvokedUrlCommand*)command;
 - (void)sendAddToCart:(CDVInvokedUrlCommand*)command;
@@ -43,11 +48,37 @@
 
 @implementation FabricPlugin
 
+@synthesize initialized;
+
 #pragma mark - Plugin Initialization
 
 - (void)pluginInitialize
 {
-    [Fabric with:@[[Crashlytics class], [Answers class]]];
+    initialized = false;
+    NSDictionary* fabricSettings = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Fabric"];
+    bool autoInit = [[fabricSettings objectForKey:@"AutoInit"] boolValue];
+    if(autoInit){
+        [self _initialize];
+    }
+}
+
+- (void) _initialize
+{
+    if(!initialized){
+        [Fabric with:@[[Crashlytics class], [Answers class]]];
+        initialized = true;
+    }
+}
+
+-(void) initialize:(CDVInvokedUrlCommand *)command {
+    [self _initialize];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+-(void) isInitialized:(CDVInvokedUrlCommand *)command{
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:initialized];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 #pragma mark - Answers

@@ -23,6 +23,10 @@ import com.crashlytics.android.answers.ShareEvent;
 import com.crashlytics.android.answers.SignUpEvent;
 import com.crashlytics.android.answers.StartCheckoutEvent;
 
+import android.app.Activity;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.lang.reflect.Method;
@@ -36,17 +40,35 @@ import io.fabric.sdk.android.Fabric;
 
 public class FabricPlugin extends CordovaPlugin {
 	private final String pluginName = "FabricPlugin";
+	private final String autoInitKey = "FabricPlugin_AutoInit";
+
+	private boolean initialized = false;
 
 	@Override
 	protected void pluginInitialize() {
-		Fabric.with(this.cordova.getActivity().getApplicationContext(), new Crashlytics(), new Answers());
+		boolean autoInit = true;
+		try {
+			Activity activity = this.cordova.getActivity();
+			ApplicationInfo ai = activity.getPackageManager().getApplicationInfo(activity.getPackageName(), PackageManager.GET_META_DATA);
+			Bundle bundle = ai.metaData;
+			autoInit = bundle.getBoolean(autoInitKey);
+		} catch (Exception e) {
+			Log.e(pluginName, "Failed to load FABRIC_AUTO_INIT meta-data: " + e.getMessage());
+		}
+		if(autoInit){
+			initialize();
+		}
 	}
 
 	@Override
 	public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
 		Log.d(pluginName, pluginName + " called with options: " + data);
 
-		if (action.equals("addLog")) {
+		if (action.equals("initialize")) {
+			initialize(data, callbackContext);
+		} else if (action.equals("isInitialized")) {
+			isInitialized(data, callbackContext);
+		} else if (action.equals("addLog")) {
 			addLog(data, callbackContext);
 		} else if (action.equals("sendCrash")) {
 			sendCrash(data, callbackContext);
@@ -99,6 +121,24 @@ public class FabricPlugin extends CordovaPlugin {
 		}
 
 		return true;
+	}
+
+	private void initialize(final JSONArray data,
+						final CallbackContext callbackContext) {
+		initialize();
+		callbackContext.success();
+	}
+
+	private void initialize(){
+		if(!initialized){
+			Fabric.with(this.cordova.getActivity().getApplicationContext(), new Crashlytics(), new Answers());
+			initialized = true;
+		}
+	}
+
+	private void isInitialized(final JSONArray data,
+							final CallbackContext callbackContext) {
+		callbackContext.success(initialized ? 1 : 0);
 	}
 
 	/* Crashlytics Events */
