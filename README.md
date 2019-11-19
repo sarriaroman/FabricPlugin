@@ -8,7 +8,7 @@ It requires Cordova 6.x or newer (tested on 7.0.0) and has APIs for iOS and Andr
 
 The iOS version uses Fabric SDK 1.7.5 and Crashlytics SDK 3.10.1 framework bundles which are located in `lib/ios`.
 
-The Android version uses Gradle to get the Fabric SDK (`io.fabric.tools:gradle:1.+`) and the Crashlytics SDK (`com.crashlytics.sdk.android:crashlytics:2.9.1`) from Maven repositories when the plugin is added.
+The Android version uses Gradle to get the Fabric SDK (`io.fabric.tools:gradle:1.+`) and the Crashlytics SDK (`com.crashlytics.sdk.android:crashlytics:2.9.3`) from Maven repositories when the plugin is added.
 
 # Install
 
